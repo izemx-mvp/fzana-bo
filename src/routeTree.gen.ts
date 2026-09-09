@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as ShellCriteresRouteImport } from './routes/_shell.criteres'
+import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -27,27 +28,35 @@ const ShellCriteresRoute = ShellCriteresRouteImport.update({
   path: '/criteres',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellDashboardRoute = ShellDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => ShellRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/criteres': typeof ShellCriteresRoute
+  '/dashboard': typeof ShellDashboardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/criteres': typeof ShellCriteresRoute
+  '/dashboard': typeof ShellDashboardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_shell': typeof ShellRouteWithChildren
   '/_shell/criteres': typeof ShellCriteresRoute
+  '/_shell/dashboard': typeof ShellDashboardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/criteres'
+  fullPaths: '/' | '/criteres' | '/dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/criteres'
-  id: '__root__' | '/' | '/_shell' | '/_shell/criteres'
+  to: '/' | '/criteres' | '/dashboard'
+  id: '__root__' | '/' | '/_shell' | '/_shell/criteres' | '/_shell/dashboard'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -78,15 +87,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellCriteresRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/dashboard': {
+      id: '/_shell/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof ShellDashboardRouteImport
+      parentRoute: typeof ShellRoute
+    }
   }
 }
 
 interface ShellRouteChildren {
   ShellCriteresRoute: typeof ShellCriteresRoute
+  ShellDashboardRoute: typeof ShellDashboardRoute
 }
 
 const ShellRouteChildren: ShellRouteChildren = {
   ShellCriteresRoute: ShellCriteresRoute,
+  ShellDashboardRoute: ShellDashboardRoute,
 }
 
 const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
