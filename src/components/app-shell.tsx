@@ -1,7 +1,17 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { Bell, FileText, LayoutDashboard, LogOut, Menu, Search, SlidersHorizontal, User, X } from "lucide-react";
+import {
+  Bell,
+  FileText,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Search,
+  SlidersHorizontal,
+  User,
+  X,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -82,7 +92,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
           <nav className="hidden items-center gap-1 lg:flex">{NAV.map((n) => navLink(n))}</nav>
 
-          <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setMobileOpen((o) => !o)}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="lg:hidden"
+            onClick={() => setMobileOpen((o) => !o)}
+          >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
 
@@ -129,7 +144,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 </Button>
               </PopoverTrigger>
               <PopoverContent align="end" className="w-80 p-0">
-                <p className="border-b border-border px-4 py-3 font-display text-sm font-semibold">Notifications</p>
+                <p className="border-b border-border px-4 py-3 font-display text-sm font-semibold">
+                  Notifications
+                </p>
                 <div className="scroll-brand max-h-80 overflow-y-auto">
                   {notifications.map((n) => (
                     <div key={n.id} className="border-b border-border/60 px-4 py-3 last:border-0">
@@ -148,15 +165,21 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                     NE
                   </span>
                   <span className="hidden text-left md:block">
-                    <span className="block text-xs font-medium leading-tight">Mme Naoual Elhaoussi</span>
-                    <span className="block text-[11px] leading-tight text-muted-foreground">FZANA Systems</span>
+                    <span className="block text-xs font-medium leading-tight">
+                      Mme Naoual Elhaoussi
+                    </span>
+                    <span className="block text-[11px] leading-tight text-muted-foreground">
+                      FZANA Systems
+                    </span>
                   </span>
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuLabel>Mon compte</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => toast("Profil : Mme Naoual Elhaoussi — FZANA Systems")}>
+                <DropdownMenuItem
+                  onClick={() => toast("Profil : Mme Naoual Elhaoussi — FZANA Systems")}
+                >
                   <User className="mr-2 h-4 w-4" /> Profil
                 </DropdownMenuItem>
                 <DropdownMenuItem

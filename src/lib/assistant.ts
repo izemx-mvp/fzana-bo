@@ -38,7 +38,10 @@ export function getAssistantReply(question: string, t: Tender): string {
     }
     const lines = [
       ...ko.map((r) => `• ❌ ${r.article} — ${productById(r.productId).name} (score ${r.score}%)`),
-      ...warn.map((r) => `• ⚠️ ${r.article} — ${productById(r.productId).name} (score ${r.score}%, à vérifier)`),
+      ...warn.map(
+        (r) =>
+          `• ⚠️ ${r.article} — ${productById(r.productId).name} (score ${r.score}%, à vérifier)`,
+      ),
     ];
     return `Sur ${t.requirements.length} ligne(s), ${ko.length} non conforme(s) et ${warn.length} à vérifier :\n${lines.join("\n")}\nScore global de conformité : ${conformityRate(t)}%.`;
   }

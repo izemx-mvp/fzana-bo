@@ -83,10 +83,17 @@ export function AssistantPanel({ tender }: { tender: Tender }) {
                   <Bot className="h-4 w-4 text-primary-foreground" />
                 </span>
                 <div className="min-w-0">
-                  <p className="truncate font-display text-sm font-semibold">Assistant — {tender.ref}</p>
+                  <p className="truncate font-display text-sm font-semibold">
+                    Assistant — {tender.ref}
+                  </p>
                   <p className="truncate text-xs text-muted-foreground">{tender.client}</p>
                 </div>
-                <Button variant="ghost" size="icon" className="ml-auto" onClick={() => setOpen(false)}>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="ml-auto"
+                  onClick={() => setOpen(false)}
+                >
                   <X className="h-4 w-4" />
                 </Button>
               </header>

@@ -79,7 +79,9 @@ function statusFor(stage: number, t: Tender, result?: "Gagné" | "Perdu"): Tende
   if (stage >= 6) return result ?? t.result ?? "Gagné";
   if (stage === 5) return "Soumis";
   if (stage >= 3)
-    return t.requirements.some((r) => r.conformity === "Non conforme") ? "Non conforme" : "Conforme";
+    return t.requirements.some((r) => r.conformity === "Non conforme")
+      ? "Non conforme"
+      : "Conforme";
   if (stage === 2) return "En analyse";
   return "Nouveau";
 }
@@ -107,7 +109,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [notifications, setNotifications] = useState([
     { id: "n1", label: "Agent Veille a identifié 3 nouveaux appels d'offres", at: "il y a 12 min" },
     { id: "n2", label: "Certificat FZANA : renouvellement à suivre", at: "il y a 2 h" },
-    { id: "n3", label: "Agent Matching a terminé l'analyse du dossier CHU-2026-0142", at: "il y a 3 h" },
+    {
+      id: "n3",
+      label: "Agent Matching a terminé l'analyse du dossier CHU-2026-0142",
+      at: "il y a 3 h",
+    },
   ]);
   const [agents, setAgents] = useState<Agent[]>([
     {
@@ -131,7 +137,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   ]);
 
   const pushNotification = useCallback((label: string) => {
-    setNotifications((n) => [{ id: crypto.randomUUID(), label, at: "à l'instant" }, ...n].slice(0, 8));
+    setNotifications((n) =>
+      [{ id: crypto.randomUUID(), label, at: "à l'instant" }, ...n].slice(0, 8),
+    );
   }, []);
 
   const updateCriteria = useCallback((patch: Partial<Criteria>) => {
@@ -150,7 +158,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
           ...t,
           stage,
           status: statusFor(stage, t),
-          history: [...t.history, { at: nowStamp(), label: stageLabels[stage] ?? "Étape franchie" }],
+          history: [
+            ...t.history,
+            { at: nowStamp(), label: stageLabels[stage] ?? "Étape franchie" },
+          ],
         };
       }),
     );
@@ -232,10 +243,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     docs,
     setDocStatus: (id, status) => setDocStatuses((s) => ({ ...s, [id]: status })),
     agents,
-    toggleAgent: (id) => setAgents((a) => a.map((x) => (x.id === id ? { ...x, active: !x.active } : x))),
+    toggleAgent: (id) =>
+      setAgents((a) => a.map((x) => (x.id === id ? { ...x, active: !x.active } : x))),
     markAgentRun: (id, actions) =>
       setAgents((a) =>
-        a.map((x) => (x.id === id ? { ...x, lastRun: nowStamp(), actionsToday: x.actionsToday + actions } : x)),
+        a.map((x) =>
+          x.id === id ? { ...x, lastRun: nowStamp(), actionsToday: x.actionsToday + actions } : x,
+        ),
       ),
     notifications,
     pushNotification,

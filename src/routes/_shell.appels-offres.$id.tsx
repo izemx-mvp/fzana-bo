@@ -51,16 +51,26 @@ export const Route = createFileRoute("/_shell/appels-offres/$id")({
       { title: "Détail de l'appel d'offres — FZANA Control" },
       {
         name: "description",
-        content: "Fiche de synthèse, exigences techniques, matching produits et documents générés du dossier.",
+        content:
+          "Fiche de synthèse, exigences techniques, matching produits et documents générés du dossier.",
       },
       { property: "og:title", content: "Détail de l'appel d'offres — FZANA Control" },
-      { property: "og:description", content: "Suivi complet du dossier, de l'identification au résultat." },
+      {
+        property: "og:description",
+        content: "Suivi complet du dossier, de l'identification au résultat.",
+      },
     ],
   }),
   component: TenderDetail,
 });
 
-const TABS = ["Fiche de synthèse", "Exigences techniques", "Matching produits", "Documents", "Historique"] as const;
+const TABS = [
+  "Fiche de synthèse",
+  "Exigences techniques",
+  "Matching produits",
+  "Documents",
+  "Historique",
+] as const;
 type Tab = (typeof TABS)[number];
 
 const tabMinStage: Record<Tab, number> = {
@@ -149,7 +159,15 @@ function Confetti() {
   );
 }
 
-function Stat({ icon: Icon, label, children }: { icon: React.ElementType; label: string; children: React.ReactNode }) {
+function Stat({
+  icon: Icon,
+  label,
+  children,
+}: {
+  icon: React.ElementType;
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="glass-card hover-lift flex items-center gap-3 px-4 py-3">
       <span className="rounded-lg bg-accent-soft p-2">
@@ -241,7 +259,9 @@ function TenderDetail() {
             {initials(t.client)}
           </span>
           <div className="min-w-0 flex-1">
-            <h1 className="font-display text-2xl font-semibold tracking-tight md:text-3xl">{t.client}</h1>
+            <h1 className="font-display text-2xl font-semibold tracking-tight md:text-3xl">
+              {t.client}
+            </h1>
             <p className="mt-1 text-sm text-muted-foreground">
               Appel d'offres {t.ref} · étape {t.stage}/6 — {STAGES[t.stage - 1]}
             </p>
@@ -304,7 +324,9 @@ function TenderDetail() {
                   >
                     {s}
                   </p>
-                  {n === 6 && t.result ? <p className="text-xs text-muted-foreground">{t.result}</p> : null}
+                  {n === 6 && t.result ? (
+                    <p className="text-xs text-muted-foreground">{t.result}</p>
+                  ) : null}
                 </div>
               );
             })}
@@ -418,7 +440,9 @@ function TenderDetail() {
                   </ul>
                 )}
 
-                <h3 className="mt-8 font-display text-base font-semibold">Risques identifiés par l'IA</h3>
+                <h3 className="mt-8 font-display text-base font-semibold">
+                  Risques identifiés par l'IA
+                </h3>
                 <div className="clinical-rule my-4" />
                 {risks.length === 0 ? (
                   <p className="text-sm text-muted-foreground">
@@ -433,8 +457,9 @@ function TenderDetail() {
                       >
                         <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[var(--warning)]" />
                         <span>
-                          <strong>{r.article}</strong> — {r.conformity.toLowerCase()} : spécification « {r.specs} »
-                          proche de la limite (score {r.score}% avec {productById(r.productId).name}).
+                          <strong>{r.article}</strong> — {r.conformity.toLowerCase()} :
+                          spécification « {r.specs} » proche de la limite (score {r.score}% avec{" "}
+                          {productById(r.productId).name}).
                         </span>
                       </li>
                     ))}
@@ -504,8 +529,12 @@ function TenderDetail() {
                         className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`}
                       />
                       <span className="min-w-52 flex-1 font-medium">{r.article}</span>
-                      <span className="tabular-nums text-sm text-muted-foreground">Qté {r.qty}</span>
-                      <span className="min-w-52 flex-1 text-sm text-muted-foreground">{r.specs}</span>
+                      <span className="tabular-nums text-sm text-muted-foreground">
+                        Qté {r.qty}
+                      </span>
+                      <span className="min-w-52 flex-1 text-sm text-muted-foreground">
+                        {r.specs}
+                      </span>
                       <ConformityBadge value={r.conformity} />
                     </button>
                     <AnimatePresence initial={false}>
@@ -528,7 +557,12 @@ function TenderDetail() {
                               <div className="mt-3">
                                 <ScoreGauge value={r.score} />
                               </div>
-                              <Button size="sm" variant="outline" className="mt-3" onClick={() => setProduct(p)}>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="mt-3"
+                                onClick={() => setProduct(p)}
+                              >
                                 <Eye className="mr-1.5 h-3.5 w-3.5" /> Fiche produit
                               </Button>
                             </div>
@@ -571,11 +605,15 @@ function TenderDetail() {
                       <Package className="h-10 w-10 text-primary-foreground/80" />
                     </div>
                     <div className="flex flex-1 flex-col p-5">
-                      <p className="text-xs uppercase tracking-wide text-muted-foreground">Exigence</p>
+                      <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                        Exigence
+                      </p>
                       <p className="font-medium">{r.article}</p>
                       <p className="text-sm text-muted-foreground">{r.specs}</p>
                       <div className="clinical-rule my-3" />
-                      <p className="text-xs uppercase tracking-wide text-muted-foreground">Produit proposé</p>
+                      <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                        Produit proposé
+                      </p>
                       <p className="font-medium">{p.name}</p>
                       <p className="text-sm text-muted-foreground">
                         {p.supplier} · {p.reference}
@@ -584,7 +622,12 @@ function TenderDetail() {
                         <ScoreGauge value={r.score} />
                         <ConformityBadge value={r.conformity} />
                       </div>
-                      <Button size="sm" variant="outline" className="mt-4" onClick={() => setProduct(p)}>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="mt-4"
+                        onClick={() => setProduct(p)}
+                      >
                         <Eye className="mr-1.5 h-3.5 w-3.5" /> Aperçu
                       </Button>
                     </div>
@@ -598,7 +641,9 @@ function TenderDetail() {
             <div>
               {generating !== null && (
                 <div className="glass-card mb-4 p-5">
-                  <p className="font-display text-sm font-semibold">Génération documentaire en cours…</p>
+                  <p className="font-display text-sm font-semibold">
+                    Génération documentaire en cours…
+                  </p>
                   <Progress value={(generating / DOC_TYPES.length) * 100} className="my-3 h-2" />
                   <ul className="space-y-2">
                     {DOC_TYPES.map((dt, i) => (
@@ -631,7 +676,12 @@ function TenderDetail() {
                       {doc.status} · généré le {doc.createdAt}
                     </p>
                     <div className="mt-4 flex gap-2">
-                      <Button size="sm" variant="outline" className="flex-1" onClick={() => setPreviewDoc(doc.type)}>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="flex-1"
+                        onClick={() => setPreviewDoc(doc.type)}
+                      >
                         <Eye className="mr-1.5 h-3.5 w-3.5" /> Aperçu
                       </Button>
                       <Button
@@ -698,7 +748,9 @@ export function DocPreview({ tender, type }: { tender: Tender; type: DocType }) 
       <div className="flex items-start justify-between border-b border-clinical-line pb-4">
         <div>
           <p className="font-display text-lg font-semibold text-primary">FZANA SYSTEMS</p>
-          <p className="text-xs text-muted-foreground">Distribution d'équipements médicaux — Casablanca, Maroc</p>
+          <p className="text-xs text-muted-foreground">
+            Distribution d'équipements médicaux — Casablanca, Maroc
+          </p>
         </div>
         <div className="text-right text-xs text-muted-foreground">
           <p>{type}</p>
@@ -737,9 +789,9 @@ export function DocPreview({ tender, type }: { tender: Tender; type: DocType }) 
       {type === "Acte d'engagement" ? (
         <div className="space-y-3 leading-relaxed">
           <p>
-            Le soussigné, agissant au nom et pour le compte de <strong>FZANA SYSTEMS</strong>, s'engage à
-            exécuter les prestations objet du marché <strong>{tender.ref}</strong> conformément aux clauses du
-            cahier des charges et aux prix portés au bordereau joint.
+            Le soussigné, agissant au nom et pour le compte de <strong>FZANA SYSTEMS</strong>,
+            s'engage à exécuter les prestations objet du marché <strong>{tender.ref}</strong>{" "}
+            conformément aux clauses du cahier des charges et aux prix portés au bordereau joint.
           </p>
           <p>Certificat d'enregistrement mobilisé : partenaire avec autorisation.</p>
           <p className="pt-6">Fait à Casablanca, le {new Date().toLocaleDateString("fr-FR")}</p>
@@ -752,7 +804,9 @@ export function DocPreview({ tender, type }: { tender: Tender; type: DocType }) 
               <th className="py-2">Désignation</th>
               <th className="py-2">Qté</th>
               <th className="py-2">Solution FZANA</th>
-              <th className="py-2">{type === "Bordereau des prix" ? "Montant (MAD)" : "Conformité"}</th>
+              <th className="py-2">
+                {type === "Bordereau des prix" ? "Montant (MAD)" : "Conformité"}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -767,7 +821,9 @@ export function DocPreview({ tender, type }: { tender: Tender; type: DocType }) 
                     {p.name} <span className="text-muted-foreground">({p.reference})</span>
                   </td>
                   <td className="py-2 tabular-nums">
-                    {type === "Bordereau des prix" ? unit.toLocaleString("fr-MA") : `${r.conformity} · ${r.score}%`}
+                    {type === "Bordereau des prix"
+                      ? unit.toLocaleString("fr-MA")
+                      : `${r.conformity} · ${r.score}%`}
                   </td>
                 </tr>
               );

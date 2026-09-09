@@ -29,10 +29,14 @@ export const Route = createFileRoute("/_shell/dashboard")({
       { title: "Tableau de bord — FZANA Control" },
       {
         name: "description",
-        content: "Vue d'ensemble des appels d'offres suivis, du budget et de l'activité des agents IA FZANA.",
+        content:
+          "Vue d'ensemble des appels d'offres suivis, du budget et de l'activité des agents IA FZANA.",
       },
       { property: "og:title", content: "Tableau de bord — FZANA Control" },
-      { property: "og:description", content: "KPI, activité des agents IA et échéances des marchés publics." },
+      {
+        property: "og:description",
+        content: "KPI, activité des agents IA et échéances des marchés publics.",
+      },
     ],
   }),
   component: DashboardPage,
@@ -127,7 +131,13 @@ function DashboardPage() {
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <KpiCard label="Appels d'offres actifs" value={actifs} icon={FileText} delay={0} />
         <KpiCard label="Budget total suivi (MAD)" value={budget} icon={Wallet} delay={0.05} />
-        <KpiCard label="Taux de conformité produits" value={conformite} suffix="%" icon={Activity} delay={0.1} />
+        <KpiCard
+          label="Taux de conformité produits"
+          value={conformite}
+          suffix="%"
+          icon={Activity}
+          delay={0.1}
+        />
         <KpiCard label="Dossiers soumis ce mois" value={soumis} icon={FileCheck2} delay={0.15} />
         <KpiCard label="Certificats à renouveler" value={3} icon={ShieldCheck} delay={0.2} />
       </div>
@@ -140,7 +150,9 @@ function DashboardPage() {
           className="glass-card p-5 lg:col-span-2"
         >
           <h2 className="font-display text-base font-semibold">Activité des 30 derniers jours</h2>
-          <p className="text-sm text-muted-foreground">Appels d'offres identifiés vs dossiers soumis</p>
+          <p className="text-sm text-muted-foreground">
+            Appels d'offres identifiés vs dossiers soumis
+          </p>
           <div className="mt-4 h-64">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData}>
@@ -171,7 +183,13 @@ function DashboardPage() {
                   fill="url(#gId)"
                   strokeWidth={2}
                 />
-                <Area type="monotone" dataKey="soumis" stroke="var(--accent)" fill="url(#gSub)" strokeWidth={2} />
+                <Area
+                  type="monotone"
+                  dataKey="soumis"
+                  stroke="var(--accent)"
+                  fill="url(#gSub)"
+                  strokeWidth={2}
+                />
               </AreaChart>
             </ResponsiveContainer>
           </div>

@@ -7,7 +7,11 @@ import type { Conformity, TenderStatus } from "@/lib/mock-data";
 
 export const fadeUp = {
   hidden: { opacity: 0, y: 12 },
-  show: (i = 0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.04, duration: 0.35, ease: "easeOut" } }),
+  show: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.04, duration: 0.35, ease: "easeOut" },
+  }),
 } as const;
 
 export function PageHeader({
@@ -48,14 +52,23 @@ export function StatusBadge({ status }: { status: TenderStatus }) {
   const map: Record<TenderStatus, string> = {
     Nouveau: "bg-secondary text-secondary-foreground border-border",
     "En analyse": "bg-accent-soft text-primary border-accent/30",
-    Conforme: "bg-[color-mix(in_oklab,var(--success)_14%,white)] text-[var(--success)] border-[color-mix(in_oklab,var(--success)_30%,white)]",
-    "Non conforme": "bg-[color-mix(in_oklab,var(--destructive)_10%,white)] text-destructive border-[color-mix(in_oklab,var(--destructive)_25%,white)]",
-    Soumis: "bg-[color-mix(in_oklab,var(--primary)_10%,white)] text-primary border-[color-mix(in_oklab,var(--primary)_25%,white)]",
-    Gagné: "bg-[color-mix(in_oklab,var(--success)_16%,white)] text-[var(--success)] border-[color-mix(in_oklab,var(--success)_32%,white)]",
+    Conforme:
+      "bg-[color-mix(in_oklab,var(--success)_14%,white)] text-[var(--success)] border-[color-mix(in_oklab,var(--success)_30%,white)]",
+    "Non conforme":
+      "bg-[color-mix(in_oklab,var(--destructive)_10%,white)] text-destructive border-[color-mix(in_oklab,var(--destructive)_25%,white)]",
+    Soumis:
+      "bg-[color-mix(in_oklab,var(--primary)_10%,white)] text-primary border-[color-mix(in_oklab,var(--primary)_25%,white)]",
+    Gagné:
+      "bg-[color-mix(in_oklab,var(--success)_16%,white)] text-[var(--success)] border-[color-mix(in_oklab,var(--success)_32%,white)]",
     Perdu: "bg-muted text-muted-foreground border-border",
   };
   return (
-    <span className={cn("inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium", map[status])}>
+    <span
+      className={cn(
+        "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium",
+        map[status],
+      )}
+    >
       {status}
     </span>
   );
@@ -69,7 +82,12 @@ export function ConformityBadge({ value }: { value: Conformity }) {
   };
   const icon = value === "Conforme" ? "✅" : value === "À vérifier" ? "⚠️" : "❌";
   return (
-    <span className={cn("inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium", map[value])}>
+    <span
+      className={cn(
+        "inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium",
+        map[value],
+      )}
+    >
       <span aria-hidden>{icon}</span>
       {value}
     </span>
@@ -169,7 +187,9 @@ export function Pagination({
         </Button>
         {nums.map((n, i) => (
           <span key={n} className="flex items-center">
-            {i > 0 && n - (nums[i - 1] ?? 0) > 1 ? <span className="px-1 text-muted-foreground">…</span> : null}
+            {i > 0 && n - (nums[i - 1] ?? 0) > 1 ? (
+              <span className="px-1 text-muted-foreground">…</span>
+            ) : null}
             <Button
               variant={n === page ? "default" : "ghost"}
               size="sm"
@@ -180,7 +200,12 @@ export function Pagination({
             </Button>
           </span>
         ))}
-        <Button variant="outline" size="icon" disabled={page >= pages} onClick={() => onPage(page + 1)}>
+        <Button
+          variant="outline"
+          size="icon"
+          disabled={page >= pages}
+          onClick={() => onPage(page + 1)}
+        >
           <ChevronRight className="h-4 w-4" />
         </Button>
       </div>

@@ -25,7 +25,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { CATEGORIES, conformityRate, type Tender, type TenderStatus } from "@/lib/mock-data";
 import { useApp } from "@/lib/store";
 
@@ -38,7 +44,10 @@ export const Route = createFileRoute("/_shell/appels-offres/")({
         content: "Liste filtrable des appels d'offres publics santé suivis par FZANA Systems.",
       },
       { property: "og:title", content: "Appels d'offres — FZANA Control" },
-      { property: "og:description", content: "Recherche, filtres, tri et analyse IA des marchés publics santé." },
+      {
+        property: "og:description",
+        content: "Recherche, filtres, tri et analyse IA des marchés publics santé.",
+      },
     ],
   }),
   component: TendersPage,
@@ -104,9 +113,20 @@ function TendersPage() {
   const toggleSort = (key: typeof sort.key) =>
     setSort((s) => ({ key, dir: s.key === key && s.dir === "asc" ? "desc" : "asc" }));
 
-  const SortHead = ({ label, k, className }: { label: string; k: typeof sort.key; className?: string }) => (
+  const SortHead = ({
+    label,
+    k,
+    className,
+  }: {
+    label: string;
+    k: typeof sort.key;
+    className?: string;
+  }) => (
     <th className={`px-4 py-3 text-left ${className ?? ""}`}>
-      <button className="inline-flex items-center gap-1 hover:text-foreground" onClick={() => toggleSort(k)}>
+      <button
+        className="inline-flex items-center gap-1 hover:text-foreground"
+        onClick={() => toggleSort(k)}
+      >
         {label}
         {sort.key === k ? (
           sort.dir === "asc" ? (
@@ -187,7 +207,9 @@ function TendersPage() {
       {!criteriaSaved && (
         <div className="mb-6 flex flex-wrap items-center gap-3 rounded-lg border border-[color-mix(in_oklab,var(--warning)_35%,white)] bg-[color-mix(in_oklab,var(--warning)_12%,white)] px-4 py-3">
           <AlertTriangle className="h-5 w-5 text-[var(--warning)]" />
-          <p className="text-sm font-medium">Configurez vos critères de veille avant de lancer une recherche.</p>
+          <p className="text-sm font-medium">
+            Configurez vos critères de veille avant de lancer une recherche.
+          </p>
           <Button asChild size="sm" variant="outline" className="ml-auto">
             <Link to="/criteres">Configurer</Link>
           </Button>
@@ -208,7 +230,13 @@ function TendersPage() {
               className="pl-9"
             />
           </div>
-          <Select value={status} onValueChange={(v) => { setStatus(v); setPage(1); }}>
+          <Select
+            value={status}
+            onValueChange={(v) => {
+              setStatus(v);
+              setPage(1);
+            }}
+          >
             <SelectTrigger>
               <SelectValue placeholder="Statut" />
             </SelectTrigger>
@@ -221,7 +249,13 @@ function TendersPage() {
               ))}
             </SelectContent>
           </Select>
-          <Select value={sector} onValueChange={(v) => { setSector(v); setPage(1); }}>
+          <Select
+            value={sector}
+            onValueChange={(v) => {
+              setSector(v);
+              setPage(1);
+            }}
+          >
             <SelectTrigger>
               <SelectValue placeholder="Secteur" />
             </SelectTrigger>
@@ -260,7 +294,10 @@ function TendersPage() {
       </div>
 
       {filtered.length === 0 ? (
-        <EmptyState title="Aucun résultat pour cette recherche" hint="Ajustez vos filtres ou vos critères de veille." />
+        <EmptyState
+          title="Aucun résultat pour cette recherche"
+          hint="Ajustez vos filtres ou vos critères de veille."
+        />
       ) : view === "list" ? (
         <div className="glass-card overflow-hidden">
           <div className="overflow-x-auto">
@@ -321,8 +358,13 @@ function TendersPage() {
                         </div>
                         {analysing?.id === t.id && (
                           <div className="mt-2 w-56">
-                            <Progress value={((analysing.step + 1) / ANALYSIS_STEPS.length) * 100} className="h-1.5" />
-                            <p className="mt-1 text-xs text-muted-foreground">{ANALYSIS_STEPS[analysing.step]}</p>
+                            <Progress
+                              value={((analysing.step + 1) / ANALYSIS_STEPS.length) * 100}
+                              className="h-1.5"
+                            />
+                            <p className="mt-1 text-xs text-muted-foreground">
+                              {ANALYSIS_STEPS[analysing.step]}
+                            </p>
                           </div>
                         )}
                       </td>
@@ -378,7 +420,12 @@ function TendersPage() {
                 </div>
                 <div className="mt-4 flex gap-2">
                   {t.status === "Nouveau" && (
-                    <Button size="sm" variant="outline" className="flex-1" onClick={() => launchAnalysis(t)}>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="flex-1"
+                      onClick={() => launchAnalysis(t)}
+                    >
                       <Sparkles className="mr-1.5 h-3.5 w-3.5" /> Analyse IA
                     </Button>
                   )}
@@ -390,8 +437,13 @@ function TendersPage() {
                 </div>
                 {analysing?.id === t.id && (
                   <div className="mt-3">
-                    <Progress value={((analysing.step + 1) / ANALYSIS_STEPS.length) * 100} className="h-1.5" />
-                    <p className="mt-1 text-xs text-muted-foreground">{ANALYSIS_STEPS[analysing.step]}</p>
+                    <Progress
+                      value={((analysing.step + 1) / ANALYSIS_STEPS.length) * 100}
+                      className="h-1.5"
+                    />
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      {ANALYSIS_STEPS[analysing.step]}
+                    </p>
                   </div>
                 )}
               </motion.div>

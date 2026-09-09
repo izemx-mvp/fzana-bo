@@ -14,12 +14,14 @@ export const Route = createFileRoute("/")({
       { title: "Connexion — FZANA Control" },
       {
         name: "description",
-        content: "Accès au backoffice FZANA Systems : veille des appels d'offres publics et agents IA.",
+        content:
+          "Accès au backoffice FZANA Systems : veille des appels d'offres publics et agents IA.",
       },
       { property: "og:title", content: "Connexion — FZANA Control" },
       {
         property: "og:description",
-        content: "Accès sécurisé au backoffice FZANA Systems pour la gestion des marchés publics santé.",
+        content:
+          "Accès sécurisé au backoffice FZANA Systems pour la gestion des marchés publics santé.",
       },
     ],
   }),
@@ -68,7 +70,12 @@ function LoginPage() {
           >
             <div className="space-y-2">
               <Label htmlFor="email">Email professionnel</Label>
-              <Input id="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <Input
+                id="email"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Mot de passe</Label>
@@ -80,7 +87,11 @@ function LoginPage() {
               />
             </div>
             <Button type="submit" className="btn-shine w-full" disabled={loading}>
-              {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <LogIn className="mr-2 h-4 w-4" />}
+              {loading ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <LogIn className="mr-2 h-4 w-4" />
+              )}
               Se connecter
             </Button>
           </form>
@@ -90,8 +101,8 @@ function LoginPage() {
               <ShieldCheck className="h-4 w-4 text-accent" /> Accès démonstration
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Email : <span className="font-medium text-foreground">agent@fzana.ma</span> · Mot de passe :{" "}
-              <span className="font-medium text-foreground">Demo@2026</span>
+              Email : <span className="font-medium text-foreground">agent@fzana.ma</span> · Mot de
+              passe : <span className="font-medium text-foreground">Demo@2026</span>
             </p>
             <Button
               type="button"
@@ -139,8 +150,8 @@ function LoginPage() {
             transition={{ delay: 0.4 }}
             className="mt-4 max-w-md text-sm text-primary-foreground/80"
           >
-            Veille automatisée des marchés publics, matching technique du catalogue et génération des dossiers
-            de réponse — pilotés par vos agents IA.
+            Veille automatisée des marchés publics, matching technique du catalogue et génération
+            des dossiers de réponse — pilotés par vos agents IA.
           </motion.p>
         </div>
       </div>
