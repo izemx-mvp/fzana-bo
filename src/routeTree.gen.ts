@@ -18,6 +18,7 @@ import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
 import { Route as ShellDocumentsRouteImport } from './routes/_shell.documents'
 import { Route as ShellFournisseursRouteImport } from './routes/_shell.fournisseurs'
 import { Route as ShellMatchingRouteImport } from './routes/_shell.matching'
+import { Route as ShellParametresRouteImport } from './routes/_shell.parametres'
 import { Route as ShellAppelsOffresIndexRouteImport } from './routes/_shell.appels-offres.index'
 import { Route as ShellAppelsOffresIdRouteImport } from './routes/_shell.appels-offres.$id'
 
@@ -65,6 +66,11 @@ const ShellMatchingRoute = ShellMatchingRouteImport.update({
   path: '/matching',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellParametresRoute = ShellParametresRouteImport.update({
+  id: '/parametres',
+  path: '/parametres',
+  getParentRoute: () => ShellRoute,
+} as any)
 const ShellAppelsOffresIndexRoute = ShellAppelsOffresIndexRouteImport.update({
   id: '/appels-offres/',
   path: '/appels-offres/',
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/documents': typeof ShellDocumentsRoute
   '/fournisseurs': typeof ShellFournisseursRoute
   '/matching': typeof ShellMatchingRoute
+  '/parametres': typeof ShellParametresRoute
   '/appels-offres/$id': typeof ShellAppelsOffresIdRoute
   '/appels-offres/': typeof ShellAppelsOffresIndexRoute
 }
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/documents': typeof ShellDocumentsRoute
   '/fournisseurs': typeof ShellFournisseursRoute
   '/matching': typeof ShellMatchingRoute
+  '/parametres': typeof ShellParametresRoute
   '/appels-offres/$id': typeof ShellAppelsOffresIdRoute
   '/appels-offres': typeof ShellAppelsOffresIndexRoute
 }
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/_shell/documents': typeof ShellDocumentsRoute
   '/_shell/fournisseurs': typeof ShellFournisseursRoute
   '/_shell/matching': typeof ShellMatchingRoute
+  '/_shell/parametres': typeof ShellParametresRoute
   '/_shell/appels-offres/$id': typeof ShellAppelsOffresIdRoute
   '/_shell/appels-offres/': typeof ShellAppelsOffresIndexRoute
 }
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/documents'
     | '/fournisseurs'
     | '/matching'
+    | '/parametres'
     | '/appels-offres/$id'
     | '/appels-offres/'
   fileRoutesByTo: FileRoutesByTo
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/documents'
     | '/fournisseurs'
     | '/matching'
+    | '/parametres'
     | '/appels-offres/$id'
     | '/appels-offres'
   id:
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/_shell/documents'
     | '/_shell/fournisseurs'
     | '/_shell/matching'
+    | '/_shell/parametres'
     | '/_shell/appels-offres/$id'
     | '/_shell/appels-offres/'
   fileRoutesById: FileRoutesById
@@ -224,6 +236,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellMatchingRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/parametres': {
+      id: '/_shell/parametres'
+      path: '/parametres'
+      fullPath: '/parametres'
+      preLoaderRoute: typeof ShellParametresRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/appels-offres/': {
       id: '/_shell/appels-offres/'
       path: '/appels-offres'
@@ -249,6 +268,7 @@ interface ShellRouteChildren {
   ShellDocumentsRoute: typeof ShellDocumentsRoute
   ShellFournisseursRoute: typeof ShellFournisseursRoute
   ShellMatchingRoute: typeof ShellMatchingRoute
+  ShellParametresRoute: typeof ShellParametresRoute
   ShellAppelsOffresIdRoute: typeof ShellAppelsOffresIdRoute
   ShellAppelsOffresIndexRoute: typeof ShellAppelsOffresIndexRoute
 }
@@ -261,6 +281,7 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellDocumentsRoute: ShellDocumentsRoute,
   ShellFournisseursRoute: ShellFournisseursRoute,
   ShellMatchingRoute: ShellMatchingRoute,
+  ShellParametresRoute: ShellParametresRoute,
   ShellAppelsOffresIdRoute: ShellAppelsOffresIdRoute,
   ShellAppelsOffresIndexRoute: ShellAppelsOffresIndexRoute,
 }
