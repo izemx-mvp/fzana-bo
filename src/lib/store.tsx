@@ -3,6 +3,7 @@ import {
   CATEGORIES,
   DOC_TYPES,
   TENDERS,
+  generateDiscoveredTender,
   type Category,
   type DocType,
   type GeneratedDoc,
@@ -61,6 +62,7 @@ type Ctx = {
   advanceStage: (id: string) => void;
   setResult: (id: string, result: "Gagné" | "Perdu") => void;
   runAnalysis: (id: string) => void;
+  runVeille: () => Tender[];
 
   docs: GeneratedDoc[];
   setDocStatus: (id: string, status: GeneratedDoc["status"]) => void;
