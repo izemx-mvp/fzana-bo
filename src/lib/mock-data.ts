@@ -817,3 +817,67 @@ export const AGENT_LOGS_MATCHING = [
   "→ Consolidation du tableau de conformité…",
   "✓ Matching terminé",
 ];
+
+const NEW_CLIENTS = CLIENTS;
+
+const pick = <T,>(arr: readonly T[]): T => arr[Math.floor(Math.random() * arr.length)]!;
+
+/** Génère un nouvel appel d'offres "découvert" par l'Agent Veille, aligné sur les critères. */
+export function generateDiscoveredTender(opts: {
+  categories: Category[];
+  cities: string[];
+  budgetMin: number;
+  budgetMax: number;
+  existingRefs: string[];
+}): Tender {
+  const category = pick(opts.categories.length ? opts.categories : CATEGORIES);
+  const city = pick(opts.cities.length ? opts.cities : CITIES);
+  const min = Math.max(50000, Math.min(opts.budgetMin, opts.budgetMax));
+  const max = Math.max(min + 100000, opts.budgetMax);
+  const budget = Math.round((min + Math.random() * (max - min)) / 10000) * 10000;
+
+  let ref = "";
+  do {
+    ref = `AO-2026-${String(Math.floor(1000 + Math.random() * 8999))}`;
+  } while (opts.existingRefs.includes(ref));
+
+  const pool = PRODUCTS.filter((p) => p.category === category);
+  const chosen = (pool.length ? pool : PRODUCTS).slice(0, 2);
+  const requirements: Requirement[] = chosen.map((p, j) => ({
+    id: `${ref}-L${j + 1}`,
+    article: p.name.replace(/\s[A-Z0-9-]+$/, ""),
+    qty: 2 + Math.floor(Math.random() * 40),
+    specs: p.specs[0] ?? "Spécifications standard",
+    conformity: "Conforme",
+    productId: p.id,
+    score: 88 + Math.floor(Math.random() * 10),
+  }));
+
+  const d = new Date();
+  d.setDate(d.getDate() + 20 + Math.floor(Math.random() * 60));
+  const deadline = d.toISOString().slice(0, 10);
+  const now = new Date();
+  const p2 = (n: number) => String(n).padStart(2, "0");
+  const at = `${p2(now.getDate())}/${p2(now.getMonth() + 1)}/${now.getFullYear()} ${p2(now.getHours())}:${p2(now.getMinutes())}`;
+  const avg = Math.round(requirements.reduce((a, r) => a + r.score, 0) / requirements.length);
+
+  return {
+    id: ref,
+    ref,
+    client: pick(NEW_CLIENTS),
+    city,
+    category,
+    budget,
+    deadline,
+    status: "Nouveau",
+    stage: 1,
+    requirements,
+    history: [{ at, label: "Dossier identifié par l'Agent Veille sur marchespublics.gov.ma" }],
+    summary: [
+      `L'IA a analysé ${requirements.length} ligne(s) du cahier des charges pour un budget estimé de ${budget.toLocaleString("fr-MA")} MAD.`,
+      `Catégorie dominante : ${category}. Lieu d'exécution : ${city}.`,
+      `Taux de conformité produit global estimé à ${avg}% sur la base du catalogue FZANA.`,
+      `Certificat d'enregistrement mobilisable : partenaire avec autorisation.`,
+    ],
+  };
+}

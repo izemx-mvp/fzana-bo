@@ -3,6 +3,7 @@ import {
   CATEGORIES,
   DOC_TYPES,
   TENDERS,
+  generateDiscoveredTender,
   type Category,
   type DocType,
   type GeneratedDoc,
@@ -61,6 +62,7 @@ type Ctx = {
   advanceStage: (id: string) => void;
   setResult: (id: string, result: "Gagné" | "Perdu") => void;
   runAnalysis: (id: string) => void;
+  runVeille: () => Tender[];
 
   docs: GeneratedDoc[];
   setDocStatus: (id: string, status: GeneratedDoc["status"]) => void;
@@ -198,6 +200,25 @@ export function AppProvider({ children }: { children: ReactNode }) {
     );
   }, []);
 
+  const runVeille = useCallback(() => {
+    const found: Tender[] = [];
+    const refs = tenders.map((t) => t.ref);
+    const count = 2 + Math.floor(Math.random() * 2);
+    for (let i = 0; i < count; i++) {
+      found.push(
+        generateDiscoveredTender({
+          categories: criteria.categories,
+          cities: criteria.cities,
+          budgetMin: criteria.budgetMin,
+          budgetMax: criteria.budgetMax,
+          existingRefs: [...refs, ...found.map((f) => f.ref)],
+        }),
+      );
+    }
+    setTenders((list) => [...found, ...list]);
+    return found;
+  }, [criteria, tenders]);
+
   const visibleTenders = useMemo(() => {
     if (!criteriaSaved) return tenders;
     return tenders.filter(
@@ -240,6 +261,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     advanceStage,
     setResult,
     runAnalysis,
+    runVeille,
     docs,
     setDocStatus: (id, status) => setDocStatuses((s) => ({ ...s, [id]: status })),
     agents,

@@ -70,7 +70,8 @@ const ANALYSIS_STEPS = [
 ];
 
 function TendersPage() {
-  const { visibleTenders, criteriaSaved, runAnalysis, pushNotification } = useApp();
+  const { visibleTenders, criteriaSaved, runAnalysis, runVeille, pushNotification } = useApp();
+  const [scanning, setScanning] = useState(false);
   const [q, setQ] = useState("");
   const [status, setStatus] = useState("all");
   const [sector, setSector] = useState("all");
@@ -156,6 +157,24 @@ function TendersPage() {
     }, 900);
   };
 
+  const launchVeille = () => {
+    setScanning(true);
+    toast("Veille lancée — l'Agent Veille scanne marchespublics.gov.ma…");
+    setTimeout(() => {
+      const found = runVeille();
+      setScanning(false);
+      setQ("");
+      setStatus("Nouveau");
+      setSector("all");
+      setPage(1);
+      setSort({ key: "deadline", dir: "asc" });
+      pushNotification(`Agent Veille : ${found.length} nouveaux appels d'offres identifiés`);
+      toast.success(
+        `${found.length} nouveaux appels d'offres identifiés : ${found.map((f) => f.ref).join(", ")}`,
+      );
+    }, 1600);
+  };
+
   const reset = () => {
     setQ("");
     setStatus("all");
@@ -191,14 +210,9 @@ function TendersPage() {
                 <LayoutGrid className="h-4 w-4" />
               </Button>
             </div>
-            <Button
-              disabled={!criteriaSaved}
-              onClick={() => {
-                pushNotification("Veille lancée sur marchespublics.gov.ma");
-                toast.success("Veille lancée — l'Agent Veille scanne les portails");
-              }}
-            >
-              <Sparkles className="mr-2 h-4 w-4" /> Lancer la veille
+            <Button disabled={!criteriaSaved || scanning} onClick={launchVeille}>
+              <Sparkles className={`mr-2 h-4 w-4 ${scanning ? "animate-spin" : ""}`} />
+              {scanning ? "Veille en cours…" : "Lancer la veille"}
             </Button>
           </>
         }
