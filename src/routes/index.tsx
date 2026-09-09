@@ -1,24 +1,146 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { Loader2, LogIn, ShieldCheck } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useApp } from "@/lib/store";
+import { toast } from "sonner";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Connexion — FZANA Control" },
+      {
+        name: "description",
+        content: "Accès au backoffice FZANA Systems : veille des appels d'offres publics et agents IA.",
+      },
+      { property: "og:title", content: "Connexion — FZANA Control" },
+      {
+        property: "og:description",
+        content: "Accès sécurisé au backoffice FZANA Systems pour la gestion des marchés publics santé.",
+      },
+    ],
+  }),
+  component: LoginPage,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+const LOGO = "https://fzana.izemxlab.com/assets/fzana-logo-DBUnkOwq.png";
+
+function LoginPage() {
+  const [email, setEmail] = useState("agent@fzana.ma");
+  const [password, setPassword] = useState("Demo@2026");
+  const [loading, setLoading] = useState(false);
+  const { login } = useApp();
+  const navigate = useNavigate();
+
+  const submit = (e?: React.FormEvent) => {
+    e?.preventDefault();
+    setLoading(true);
+    setTimeout(() => {
+      login();
+      toast.success("Bienvenue, Mme Elhaoussi");
+      navigate({ to: "/dashboard" });
+    }, 900);
+  };
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="grid min-h-screen lg:grid-cols-2">
+      <div className="flex items-center justify-center px-6 py-12">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="w-full max-w-sm"
+        >
+          <img src={LOGO} alt="FZANA Systems" className="h-10 w-auto" />
+          <h1 className="mt-8 font-display text-3xl font-semibold">Connexion</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Accédez au backoffice de pilotage des appels d'offres.
+          </p>
+          <div className="clinical-rule mt-6" />
+
+          <form onSubmit={submit} className="mt-6 space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email professionnel</Label>
+              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Mot de passe</Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <LogIn className="mr-2 h-4 w-4" />}
+              Se connecter
+            </Button>
+          </form>
+
+          <div className="mt-6 rounded-lg border border-accent/30 bg-accent-soft/60 p-4">
+            <p className="flex items-center gap-2 font-display text-sm font-semibold text-primary">
+              <ShieldCheck className="h-4 w-4 text-accent" /> Accès démonstration
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Email : <span className="font-medium text-foreground">agent@fzana.ma</span> · Mot de passe :{" "}
+              <span className="font-medium text-foreground">Demo@2026</span>
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-3 w-full"
+              disabled={loading}
+              onClick={() => {
+                setEmail("agent@fzana.ma");
+                setPassword("Demo@2026");
+                submit();
+              }}
+            >
+              Connexion instantanée (démo)
+            </Button>
+          </div>
+        </motion.div>
+      </div>
+
+      <div className="relative hidden overflow-hidden gradient-brand lg:block">
+        {[0, 1, 2, 3].map((i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full border border-white/15 bg-white/5 animate-float-slow"
+            style={{
+              width: 160 + i * 110,
+              height: 160 + i * 110,
+              top: `${8 + i * 18}%`,
+              left: `${-10 + i * 22}%`,
+              animationDelay: `${i * 1.6}s`,
+            }}
+          />
+        ))}
+        <div className="relative flex h-full flex-col justify-end p-12 text-primary-foreground">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="font-display text-5xl font-semibold leading-tight"
+          >
+            FZANA Control
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="mt-4 max-w-md text-sm text-primary-foreground/80"
+          >
+            Veille automatisée des marchés publics, matching technique du catalogue et génération des dossiers
+            de réponse — pilotés par vos agents IA.
+          </motion.p>
+        </div>
+      </div>
     </div>
   );
 }
