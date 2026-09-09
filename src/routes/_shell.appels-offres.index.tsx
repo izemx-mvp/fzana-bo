@@ -164,7 +164,7 @@ function TendersPage() {
       const found = runVeille();
       setScanning(false);
       setQ("");
-      setStatus("all");
+      setStatus("Nouveau");
       setSector("all");
       setPage(1);
       setSort({ key: "deadline", dir: "asc" });
