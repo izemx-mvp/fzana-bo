@@ -200,6 +200,26 @@ export function AppProvider({ children }: { children: ReactNode }) {
     );
   }, []);
 
+  const runVeille = useCallback(() => {
+    const found: Tender[] = [];
+    setTenders((list) => {
+      const refs = list.map((t) => t.ref);
+      const count = 2 + Math.floor(Math.random() * 2);
+      for (let i = 0; i < count; i++) {
+        const t = generateDiscoveredTender({
+          categories: criteria.categories,
+          cities: criteria.cities,
+          budgetMin: criteria.budgetMin,
+          budgetMax: criteria.budgetMax,
+          existingRefs: [...refs, ...found.map((f) => f.ref)],
+        });
+        found.push(t);
+      }
+      return [...found, ...list];
+    });
+    return found;
+  }, [criteria]);
+
   const visibleTenders = useMemo(() => {
     if (!criteriaSaved) return tenders;
     return tenders.filter(
@@ -242,6 +262,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     advanceStage,
     setResult,
     runAnalysis,
+    runVeille,
     docs,
     setDocStatus: (id, status) => setDocStatuses((s) => ({ ...s, [id]: status })),
     agents,
