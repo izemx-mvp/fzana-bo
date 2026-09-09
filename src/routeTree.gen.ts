@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShellRouteImport } from './routes/_shell'
+import { Route as ShellCertificatsRouteImport } from './routes/_shell.certificats'
 import { Route as ShellCriteresRouteImport } from './routes/_shell.criteres'
 import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
 import { Route as ShellDocumentsRouteImport } from './routes/_shell.documents'
@@ -27,6 +28,11 @@ const IndexRoute = IndexRouteImport.update({
 const ShellRoute = ShellRouteImport.update({
   id: '/_shell',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ShellCertificatsRoute = ShellCertificatsRouteImport.update({
+  id: '/certificats',
+  path: '/certificats',
+  getParentRoute: () => ShellRoute,
 } as any)
 const ShellCriteresRoute = ShellCriteresRouteImport.update({
   id: '/criteres',
@@ -66,6 +72,7 @@ const ShellAppelsOffresIdRoute = ShellAppelsOffresIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/certificats': typeof ShellCertificatsRoute
   '/criteres': typeof ShellCriteresRoute
   '/dashboard': typeof ShellDashboardRoute
   '/documents': typeof ShellDocumentsRoute
@@ -76,6 +83,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/certificats': typeof ShellCertificatsRoute
   '/criteres': typeof ShellCriteresRoute
   '/dashboard': typeof ShellDashboardRoute
   '/documents': typeof ShellDocumentsRoute
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_shell': typeof ShellRouteWithChildren
+  '/_shell/certificats': typeof ShellCertificatsRoute
   '/_shell/criteres': typeof ShellCriteresRoute
   '/_shell/dashboard': typeof ShellDashboardRoute
   '/_shell/documents': typeof ShellDocumentsRoute
@@ -100,6 +109,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/certificats'
     | '/criteres'
     | '/dashboard'
     | '/documents'
@@ -110,6 +120,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/certificats'
     | '/criteres'
     | '/dashboard'
     | '/documents'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_shell'
+    | '/_shell/certificats'
     | '/_shell/criteres'
     | '/_shell/dashboard'
     | '/_shell/documents'
@@ -150,6 +162,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof ShellRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_shell/certificats': {
+      id: '/_shell/certificats'
+      path: '/certificats'
+      fullPath: '/certificats'
+      preLoaderRoute: typeof ShellCertificatsRouteImport
+      parentRoute: typeof ShellRoute
     }
     '/_shell/criteres': {
       id: '/_shell/criteres'
@@ -204,6 +223,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface ShellRouteChildren {
+  ShellCertificatsRoute: typeof ShellCertificatsRoute
   ShellCriteresRoute: typeof ShellCriteresRoute
   ShellDashboardRoute: typeof ShellDashboardRoute
   ShellDocumentsRoute: typeof ShellDocumentsRoute
@@ -214,6 +234,7 @@ interface ShellRouteChildren {
 }
 
 const ShellRouteChildren: ShellRouteChildren = {
+  ShellCertificatsRoute: ShellCertificatsRoute,
   ShellCriteresRoute: ShellCriteresRoute,
   ShellDashboardRoute: ShellDashboardRoute,
   ShellDocumentsRoute: ShellDocumentsRoute,
