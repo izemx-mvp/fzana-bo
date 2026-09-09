@@ -49,7 +49,7 @@ function Section({
     <motion.section
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      className="card-elevated p-5"
+      className="glass-card p-5"
     >
       <div className="flex items-start justify-between gap-4">
         <div>

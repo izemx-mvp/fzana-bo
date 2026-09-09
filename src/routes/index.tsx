@@ -35,14 +35,11 @@ function LoginPage() {
   const { login } = useApp();
   const navigate = useNavigate();
 
-  const submit = (e?: React.FormEvent) => {
-    e?.preventDefault();
+  const go = () => {
     setLoading(true);
-    setTimeout(() => {
-      login();
-      toast.success("Bienvenue, Mme Elhaoussi");
-      navigate({ to: "/dashboard" });
-    }, 900);
+    login();
+    toast.success("Bienvenue, Mme Elhaoussi");
+    void navigate({ to: "/dashboard" });
   };
 
   return (
@@ -61,10 +58,17 @@ function LoginPage() {
           </p>
           <div className="clinical-rule mt-6" />
 
-          <form onSubmit={submit} className="mt-6 space-y-4">
+          <form
+            noValidate
+            onSubmit={(e) => {
+              e.preventDefault();
+              go();
+            }}
+            className="mt-6 space-y-4"
+          >
             <div className="space-y-2">
               <Label htmlFor="email">Email professionnel</Label>
-              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <Input id="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Mot de passe</Label>
@@ -73,10 +77,9 @@ function LoginPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="btn-shine w-full" disabled={loading}>
               {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <LogIn className="mr-2 h-4 w-4" />}
               Se connecter
             </Button>
@@ -91,14 +94,14 @@ function LoginPage() {
               <span className="font-medium text-foreground">Demo@2026</span>
             </p>
             <Button
+              type="button"
               variant="outline"
               size="sm"
               className="mt-3 w-full"
-              disabled={loading}
               onClick={() => {
                 setEmail("agent@fzana.ma");
                 setPassword("Demo@2026");
-                submit();
+                go();
               }}
             >
               Connexion instantanée (démo)

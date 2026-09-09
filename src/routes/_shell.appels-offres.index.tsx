@@ -194,7 +194,7 @@ function TendersPage() {
         </div>
       )}
 
-      <div className="card-elevated mb-4 p-4">
+      <div className="glass-card mb-4 p-4">
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -262,9 +262,9 @@ function TendersPage() {
       {filtered.length === 0 ? (
         <EmptyState title="Aucun résultat pour cette recherche" hint="Ajustez vos filtres ou vos critères de veille." />
       ) : view === "list" ? (
-        <div className="card-elevated overflow-hidden">
+        <div className="glass-card overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[900px] text-sm">
+            <table className="w-full min-w-[820px] text-sm">
               <thead className="border-b border-border bg-secondary/60 text-xs uppercase tracking-wide text-muted-foreground">
                 <tr>
                   <SortHead label="Référence" k="ref" />
@@ -344,7 +344,7 @@ function TendersPage() {
         </div>
       ) : (
         <div>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {pageItems.map((t, i) => (
               <motion.div
                 key={t.id}
@@ -352,7 +352,7 @@ function TendersPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.04 }}
                 whileHover={{ y: -3 }}
-                className="card-elevated flex flex-col p-5"
+                className="glass-card flex flex-col p-5"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
