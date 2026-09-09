@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as ShellCriteresRouteImport } from './routes/_shell.criteres'
 import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
+import { Route as ShellAppelsOffresIndexRouteImport } from './routes/_shell.appels-offres.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -33,16 +34,23 @@ const ShellDashboardRoute = ShellDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellAppelsOffresIndexRoute = ShellAppelsOffresIndexRouteImport.update({
+  id: '/appels-offres/',
+  path: '/appels-offres/',
+  getParentRoute: () => ShellRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/criteres': typeof ShellCriteresRoute
   '/dashboard': typeof ShellDashboardRoute
+  '/appels-offres/': typeof ShellAppelsOffresIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/criteres': typeof ShellCriteresRoute
   '/dashboard': typeof ShellDashboardRoute
+  '/appels-offres': typeof ShellAppelsOffresIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -50,13 +58,20 @@ export interface FileRoutesById {
   '/_shell': typeof ShellRouteWithChildren
   '/_shell/criteres': typeof ShellCriteresRoute
   '/_shell/dashboard': typeof ShellDashboardRoute
+  '/_shell/appels-offres/': typeof ShellAppelsOffresIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/criteres' | '/dashboard'
+  fullPaths: '/' | '/criteres' | '/dashboard' | '/appels-offres/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/criteres' | '/dashboard'
-  id: '__root__' | '/' | '/_shell' | '/_shell/criteres' | '/_shell/dashboard'
+  to: '/' | '/criteres' | '/dashboard' | '/appels-offres'
+  id:
+    | '__root__'
+    | '/'
+    | '/_shell'
+    | '/_shell/criteres'
+    | '/_shell/dashboard'
+    | '/_shell/appels-offres/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -94,17 +109,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellDashboardRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/appels-offres/': {
+      id: '/_shell/appels-offres/'
+      path: '/appels-offres'
+      fullPath: '/appels-offres/'
+      preLoaderRoute: typeof ShellAppelsOffresIndexRouteImport
+      parentRoute: typeof ShellRoute
+    }
   }
 }
 
 interface ShellRouteChildren {
   ShellCriteresRoute: typeof ShellCriteresRoute
   ShellDashboardRoute: typeof ShellDashboardRoute
+  ShellAppelsOffresIndexRoute: typeof ShellAppelsOffresIndexRoute
 }
 
 const ShellRouteChildren: ShellRouteChildren = {
   ShellCriteresRoute: ShellCriteresRoute,
   ShellDashboardRoute: ShellDashboardRoute,
+  ShellAppelsOffresIndexRoute: ShellAppelsOffresIndexRoute,
 }
 
 const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
