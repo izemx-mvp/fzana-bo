@@ -14,6 +14,7 @@ import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as ShellCriteresRouteImport } from './routes/_shell.criteres'
 import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
 import { Route as ShellAppelsOffresIndexRouteImport } from './routes/_shell.appels-offres.index'
+import { Route as ShellAppelsOffresIdRouteImport } from './routes/_shell.appels-offres.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -39,17 +40,24 @@ const ShellAppelsOffresIndexRoute = ShellAppelsOffresIndexRouteImport.update({
   path: '/appels-offres/',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellAppelsOffresIdRoute = ShellAppelsOffresIdRouteImport.update({
+  id: '/appels-offres/$id',
+  path: '/appels-offres/$id',
+  getParentRoute: () => ShellRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/criteres': typeof ShellCriteresRoute
   '/dashboard': typeof ShellDashboardRoute
+  '/appels-offres/$id': typeof ShellAppelsOffresIdRoute
   '/appels-offres/': typeof ShellAppelsOffresIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/criteres': typeof ShellCriteresRoute
   '/dashboard': typeof ShellDashboardRoute
+  '/appels-offres/$id': typeof ShellAppelsOffresIdRoute
   '/appels-offres': typeof ShellAppelsOffresIndexRoute
 }
 export interface FileRoutesById {
@@ -58,19 +66,22 @@ export interface FileRoutesById {
   '/_shell': typeof ShellRouteWithChildren
   '/_shell/criteres': typeof ShellCriteresRoute
   '/_shell/dashboard': typeof ShellDashboardRoute
+  '/_shell/appels-offres/$id': typeof ShellAppelsOffresIdRoute
   '/_shell/appels-offres/': typeof ShellAppelsOffresIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/criteres' | '/dashboard' | '/appels-offres/'
+  fullPaths:
+    '/' | '/criteres' | '/dashboard' | '/appels-offres/$id' | '/appels-offres/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/criteres' | '/dashboard' | '/appels-offres'
+  to: '/' | '/criteres' | '/dashboard' | '/appels-offres/$id' | '/appels-offres'
   id:
     | '__root__'
     | '/'
     | '/_shell'
     | '/_shell/criteres'
     | '/_shell/dashboard'
+    | '/_shell/appels-offres/$id'
     | '/_shell/appels-offres/'
   fileRoutesById: FileRoutesById
 }
@@ -116,18 +127,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellAppelsOffresIndexRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/appels-offres/$id': {
+      id: '/_shell/appels-offres/$id'
+      path: '/appels-offres/$id'
+      fullPath: '/appels-offres/$id'
+      preLoaderRoute: typeof ShellAppelsOffresIdRouteImport
+      parentRoute: typeof ShellRoute
+    }
   }
 }
 
 interface ShellRouteChildren {
   ShellCriteresRoute: typeof ShellCriteresRoute
   ShellDashboardRoute: typeof ShellDashboardRoute
+  ShellAppelsOffresIdRoute: typeof ShellAppelsOffresIdRoute
   ShellAppelsOffresIndexRoute: typeof ShellAppelsOffresIndexRoute
 }
 
 const ShellRouteChildren: ShellRouteChildren = {
   ShellCriteresRoute: ShellCriteresRoute,
   ShellDashboardRoute: ShellDashboardRoute,
+  ShellAppelsOffresIdRoute: ShellAppelsOffresIdRoute,
   ShellAppelsOffresIndexRoute: ShellAppelsOffresIndexRoute,
 }
 
