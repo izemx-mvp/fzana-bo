@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as ShellCriteresRouteImport } from './routes/_shell.criteres'
 import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
+import { Route as ShellDocumentsRouteImport } from './routes/_shell.documents'
 import { Route as ShellMatchingRouteImport } from './routes/_shell.matching'
 import { Route as ShellAppelsOffresIndexRouteImport } from './routes/_shell.appels-offres.index'
 import { Route as ShellAppelsOffresIdRouteImport } from './routes/_shell.appels-offres.$id'
@@ -36,6 +37,11 @@ const ShellDashboardRoute = ShellDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellDocumentsRoute = ShellDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => ShellRoute,
+} as any)
 const ShellMatchingRoute = ShellMatchingRouteImport.update({
   id: '/matching',
   path: '/matching',
@@ -56,6 +62,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/criteres': typeof ShellCriteresRoute
   '/dashboard': typeof ShellDashboardRoute
+  '/documents': typeof ShellDocumentsRoute
   '/matching': typeof ShellMatchingRoute
   '/appels-offres/$id': typeof ShellAppelsOffresIdRoute
   '/appels-offres/': typeof ShellAppelsOffresIndexRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/criteres': typeof ShellCriteresRoute
   '/dashboard': typeof ShellDashboardRoute
+  '/documents': typeof ShellDocumentsRoute
   '/matching': typeof ShellMatchingRoute
   '/appels-offres/$id': typeof ShellAppelsOffresIdRoute
   '/appels-offres': typeof ShellAppelsOffresIndexRoute
@@ -74,6 +82,7 @@ export interface FileRoutesById {
   '/_shell': typeof ShellRouteWithChildren
   '/_shell/criteres': typeof ShellCriteresRoute
   '/_shell/dashboard': typeof ShellDashboardRoute
+  '/_shell/documents': typeof ShellDocumentsRoute
   '/_shell/matching': typeof ShellMatchingRoute
   '/_shell/appels-offres/$id': typeof ShellAppelsOffresIdRoute
   '/_shell/appels-offres/': typeof ShellAppelsOffresIndexRoute
@@ -84,6 +93,7 @@ export interface FileRouteTypes {
     | '/'
     | '/criteres'
     | '/dashboard'
+    | '/documents'
     | '/matching'
     | '/appels-offres/$id'
     | '/appels-offres/'
@@ -92,6 +102,7 @@ export interface FileRouteTypes {
     | '/'
     | '/criteres'
     | '/dashboard'
+    | '/documents'
     | '/matching'
     | '/appels-offres/$id'
     | '/appels-offres'
@@ -101,6 +112,7 @@ export interface FileRouteTypes {
     | '/_shell'
     | '/_shell/criteres'
     | '/_shell/dashboard'
+    | '/_shell/documents'
     | '/_shell/matching'
     | '/_shell/appels-offres/$id'
     | '/_shell/appels-offres/'
@@ -141,6 +153,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellDashboardRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/documents': {
+      id: '/_shell/documents'
+      path: '/documents'
+      fullPath: '/documents'
+      preLoaderRoute: typeof ShellDocumentsRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/matching': {
       id: '/_shell/matching'
       path: '/matching'
@@ -168,6 +187,7 @@ declare module '@tanstack/react-router' {
 interface ShellRouteChildren {
   ShellCriteresRoute: typeof ShellCriteresRoute
   ShellDashboardRoute: typeof ShellDashboardRoute
+  ShellDocumentsRoute: typeof ShellDocumentsRoute
   ShellMatchingRoute: typeof ShellMatchingRoute
   ShellAppelsOffresIdRoute: typeof ShellAppelsOffresIdRoute
   ShellAppelsOffresIndexRoute: typeof ShellAppelsOffresIndexRoute
@@ -176,6 +196,7 @@ interface ShellRouteChildren {
 const ShellRouteChildren: ShellRouteChildren = {
   ShellCriteresRoute: ShellCriteresRoute,
   ShellDashboardRoute: ShellDashboardRoute,
+  ShellDocumentsRoute: ShellDocumentsRoute,
   ShellMatchingRoute: ShellMatchingRoute,
   ShellAppelsOffresIdRoute: ShellAppelsOffresIdRoute,
   ShellAppelsOffresIndexRoute: ShellAppelsOffresIndexRoute,
