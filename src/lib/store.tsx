@@ -202,23 +202,22 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const runVeille = useCallback(() => {
     const found: Tender[] = [];
-    setTenders((list) => {
-      const refs = list.map((t) => t.ref);
-      const count = 2 + Math.floor(Math.random() * 2);
-      for (let i = 0; i < count; i++) {
-        const t = generateDiscoveredTender({
+    const refs = tenders.map((t) => t.ref);
+    const count = 2 + Math.floor(Math.random() * 2);
+    for (let i = 0; i < count; i++) {
+      found.push(
+        generateDiscoveredTender({
           categories: criteria.categories,
           cities: criteria.cities,
           budgetMin: criteria.budgetMin,
           budgetMax: criteria.budgetMax,
           existingRefs: [...refs, ...found.map((f) => f.ref)],
-        });
-        found.push(t);
-      }
-      return [...found, ...list];
-    });
+        }),
+      );
+    }
+    setTenders((list) => [...found, ...list]);
     return found;
-  }, [criteria]);
+  }, [criteria, tenders]);
 
   const visibleTenders = useMemo(() => {
     if (!criteriaSaved) return tenders;
