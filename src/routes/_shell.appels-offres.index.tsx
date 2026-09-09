@@ -191,14 +191,9 @@ function TendersPage() {
                 <LayoutGrid className="h-4 w-4" />
               </Button>
             </div>
-            <Button
-              disabled={!criteriaSaved}
-              onClick={() => {
-                pushNotification("Veille lancée sur marchespublics.gov.ma");
-                toast.success("Veille lancée — l'Agent Veille scanne les portails");
-              }}
-            >
-              <Sparkles className="mr-2 h-4 w-4" /> Lancer la veille
+            <Button disabled={!criteriaSaved || scanning} onClick={launchVeille}>
+              <Sparkles className={`mr-2 h-4 w-4 ${scanning ? "animate-spin" : ""}`} />
+              {scanning ? "Veille en cours…" : "Lancer la veille"}
             </Button>
           </>
         }
