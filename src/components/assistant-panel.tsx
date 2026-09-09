@@ -69,14 +69,14 @@ export function AssistantPanel({ tender }: { tender: Tender }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setOpen(false)}
-              className="fixed inset-0 z-40 bg-charcoal/20 backdrop-blur-[2px]"
+              className="fixed inset-0 z-[55] bg-charcoal/20 backdrop-blur-[2px]"
             />
             <motion.aside
               initial={{ x: 420 }}
               animate={{ x: 0 }}
               exit={{ x: 420 }}
               transition={{ type: "spring", stiffness: 300, damping: 32 }}
-              className="fixed right-0 top-0 z-50 flex h-full w-full max-w-[400px] flex-col border-l border-border bg-background shadow-2xl"
+              className="fixed right-0 top-0 z-[60] flex h-full w-full max-w-[400px] flex-col border-l border-border bg-background shadow-2xl"
             >
               <header className="flex items-center gap-3 border-b border-border px-4 py-3">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full gradient-brand">
