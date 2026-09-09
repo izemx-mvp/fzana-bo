@@ -11,14 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShellRouteImport } from './routes/_shell'
-import { Route as ShellAgentsRouteImport } from './routes/_shell.agents'
-import { Route as ShellCertificatsRouteImport } from './routes/_shell.certificats'
 import { Route as ShellCriteresRouteImport } from './routes/_shell.criteres'
 import { Route as ShellDashboardRouteImport } from './routes/_shell.dashboard'
-import { Route as ShellDocumentsRouteImport } from './routes/_shell.documents'
-import { Route as ShellFournisseursRouteImport } from './routes/_shell.fournisseurs'
-import { Route as ShellMatchingRouteImport } from './routes/_shell.matching'
-import { Route as ShellParametresRouteImport } from './routes/_shell.parametres'
 import { Route as ShellAppelsOffresIndexRouteImport } from './routes/_shell.appels-offres.index'
 import { Route as ShellAppelsOffresIdRouteImport } from './routes/_shell.appels-offres.$id'
 
@@ -31,16 +25,6 @@ const ShellRoute = ShellRouteImport.update({
   id: '/_shell',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ShellAgentsRoute = ShellAgentsRouteImport.update({
-  id: '/agents',
-  path: '/agents',
-  getParentRoute: () => ShellRoute,
-} as any)
-const ShellCertificatsRoute = ShellCertificatsRouteImport.update({
-  id: '/certificats',
-  path: '/certificats',
-  getParentRoute: () => ShellRoute,
-} as any)
 const ShellCriteresRoute = ShellCriteresRouteImport.update({
   id: '/criteres',
   path: '/criteres',
@@ -49,26 +33,6 @@ const ShellCriteresRoute = ShellCriteresRouteImport.update({
 const ShellDashboardRoute = ShellDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => ShellRoute,
-} as any)
-const ShellDocumentsRoute = ShellDocumentsRouteImport.update({
-  id: '/documents',
-  path: '/documents',
-  getParentRoute: () => ShellRoute,
-} as any)
-const ShellFournisseursRoute = ShellFournisseursRouteImport.update({
-  id: '/fournisseurs',
-  path: '/fournisseurs',
-  getParentRoute: () => ShellRoute,
-} as any)
-const ShellMatchingRoute = ShellMatchingRouteImport.update({
-  id: '/matching',
-  path: '/matching',
-  getParentRoute: () => ShellRoute,
-} as any)
-const ShellParametresRoute = ShellParametresRouteImport.update({
-  id: '/parametres',
-  path: '/parametres',
   getParentRoute: () => ShellRoute,
 } as any)
 const ShellAppelsOffresIndexRoute = ShellAppelsOffresIndexRouteImport.update({
@@ -84,27 +48,15 @@ const ShellAppelsOffresIdRoute = ShellAppelsOffresIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/agents': typeof ShellAgentsRoute
-  '/certificats': typeof ShellCertificatsRoute
   '/criteres': typeof ShellCriteresRoute
   '/dashboard': typeof ShellDashboardRoute
-  '/documents': typeof ShellDocumentsRoute
-  '/fournisseurs': typeof ShellFournisseursRoute
-  '/matching': typeof ShellMatchingRoute
-  '/parametres': typeof ShellParametresRoute
   '/appels-offres/$id': typeof ShellAppelsOffresIdRoute
   '/appels-offres/': typeof ShellAppelsOffresIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/agents': typeof ShellAgentsRoute
-  '/certificats': typeof ShellCertificatsRoute
   '/criteres': typeof ShellCriteresRoute
   '/dashboard': typeof ShellDashboardRoute
-  '/documents': typeof ShellDocumentsRoute
-  '/fournisseurs': typeof ShellFournisseursRoute
-  '/matching': typeof ShellMatchingRoute
-  '/parametres': typeof ShellParametresRoute
   '/appels-offres/$id': typeof ShellAppelsOffresIdRoute
   '/appels-offres': typeof ShellAppelsOffresIndexRoute
 }
@@ -112,56 +64,23 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_shell': typeof ShellRouteWithChildren
-  '/_shell/agents': typeof ShellAgentsRoute
-  '/_shell/certificats': typeof ShellCertificatsRoute
   '/_shell/criteres': typeof ShellCriteresRoute
   '/_shell/dashboard': typeof ShellDashboardRoute
-  '/_shell/documents': typeof ShellDocumentsRoute
-  '/_shell/fournisseurs': typeof ShellFournisseursRoute
-  '/_shell/matching': typeof ShellMatchingRoute
-  '/_shell/parametres': typeof ShellParametresRoute
   '/_shell/appels-offres/$id': typeof ShellAppelsOffresIdRoute
   '/_shell/appels-offres/': typeof ShellAppelsOffresIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/agents'
-    | '/certificats'
-    | '/criteres'
-    | '/dashboard'
-    | '/documents'
-    | '/fournisseurs'
-    | '/matching'
-    | '/parametres'
-    | '/appels-offres/$id'
-    | '/appels-offres/'
+    '/' | '/criteres' | '/dashboard' | '/appels-offres/$id' | '/appels-offres/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/agents'
-    | '/certificats'
-    | '/criteres'
-    | '/dashboard'
-    | '/documents'
-    | '/fournisseurs'
-    | '/matching'
-    | '/parametres'
-    | '/appels-offres/$id'
-    | '/appels-offres'
+  to: '/' | '/criteres' | '/dashboard' | '/appels-offres/$id' | '/appels-offres'
   id:
     | '__root__'
     | '/'
     | '/_shell'
-    | '/_shell/agents'
-    | '/_shell/certificats'
     | '/_shell/criteres'
     | '/_shell/dashboard'
-    | '/_shell/documents'
-    | '/_shell/fournisseurs'
-    | '/_shell/matching'
-    | '/_shell/parametres'
     | '/_shell/appels-offres/$id'
     | '/_shell/appels-offres/'
   fileRoutesById: FileRoutesById
@@ -187,20 +106,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_shell/agents': {
-      id: '/_shell/agents'
-      path: '/agents'
-      fullPath: '/agents'
-      preLoaderRoute: typeof ShellAgentsRouteImport
-      parentRoute: typeof ShellRoute
-    }
-    '/_shell/certificats': {
-      id: '/_shell/certificats'
-      path: '/certificats'
-      fullPath: '/certificats'
-      preLoaderRoute: typeof ShellCertificatsRouteImport
-      parentRoute: typeof ShellRoute
-    }
     '/_shell/criteres': {
       id: '/_shell/criteres'
       path: '/criteres'
@@ -213,34 +118,6 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof ShellDashboardRouteImport
-      parentRoute: typeof ShellRoute
-    }
-    '/_shell/documents': {
-      id: '/_shell/documents'
-      path: '/documents'
-      fullPath: '/documents'
-      preLoaderRoute: typeof ShellDocumentsRouteImport
-      parentRoute: typeof ShellRoute
-    }
-    '/_shell/fournisseurs': {
-      id: '/_shell/fournisseurs'
-      path: '/fournisseurs'
-      fullPath: '/fournisseurs'
-      preLoaderRoute: typeof ShellFournisseursRouteImport
-      parentRoute: typeof ShellRoute
-    }
-    '/_shell/matching': {
-      id: '/_shell/matching'
-      path: '/matching'
-      fullPath: '/matching'
-      preLoaderRoute: typeof ShellMatchingRouteImport
-      parentRoute: typeof ShellRoute
-    }
-    '/_shell/parametres': {
-      id: '/_shell/parametres'
-      path: '/parametres'
-      fullPath: '/parametres'
-      preLoaderRoute: typeof ShellParametresRouteImport
       parentRoute: typeof ShellRoute
     }
     '/_shell/appels-offres/': {
@@ -261,27 +138,15 @@ declare module '@tanstack/react-router' {
 }
 
 interface ShellRouteChildren {
-  ShellAgentsRoute: typeof ShellAgentsRoute
-  ShellCertificatsRoute: typeof ShellCertificatsRoute
   ShellCriteresRoute: typeof ShellCriteresRoute
   ShellDashboardRoute: typeof ShellDashboardRoute
-  ShellDocumentsRoute: typeof ShellDocumentsRoute
-  ShellFournisseursRoute: typeof ShellFournisseursRoute
-  ShellMatchingRoute: typeof ShellMatchingRoute
-  ShellParametresRoute: typeof ShellParametresRoute
   ShellAppelsOffresIdRoute: typeof ShellAppelsOffresIdRoute
   ShellAppelsOffresIndexRoute: typeof ShellAppelsOffresIndexRoute
 }
 
 const ShellRouteChildren: ShellRouteChildren = {
-  ShellAgentsRoute: ShellAgentsRoute,
-  ShellCertificatsRoute: ShellCertificatsRoute,
   ShellCriteresRoute: ShellCriteresRoute,
   ShellDashboardRoute: ShellDashboardRoute,
-  ShellDocumentsRoute: ShellDocumentsRoute,
-  ShellFournisseursRoute: ShellFournisseursRoute,
-  ShellMatchingRoute: ShellMatchingRoute,
-  ShellParametresRoute: ShellParametresRoute,
   ShellAppelsOffresIdRoute: ShellAppelsOffresIdRoute,
   ShellAppelsOffresIndexRoute: ShellAppelsOffresIndexRoute,
 }

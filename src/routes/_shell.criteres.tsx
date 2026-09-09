@@ -25,10 +25,14 @@ export const Route = createFileRoute("/_shell/criteres")({
       { title: "Configuration des critères — FZANA Control" },
       {
         name: "description",
-        content: "Définissez les critères internes de veille : catégories, zones, budget et mots-clés.",
+        content:
+          "Définissez les critères internes de veille : catégories, zones, budget et mots-clés.",
       },
       { property: "og:title", content: "Configuration des critères — FZANA Control" },
-      { property: "og:description", content: "Paramétrez le premier filtre de l'Agent de Veille FZANA." },
+      {
+        property: "og:description",
+        content: "Paramétrez le premier filtre de l'Agent de Veille FZANA.",
+      },
     ],
   }),
   component: CriteriaPage,
@@ -49,7 +53,7 @@ function Section({
     <motion.section
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      className="card-elevated p-5"
+      className="glass-card p-5"
     >
       <div className="flex items-start justify-between gap-4">
         <div>
@@ -63,7 +67,11 @@ function Section({
               : "bg-muted text-muted-foreground"
           }`}
         >
-          {done ? <CheckCircle2 className="h-3.5 w-3.5" /> : <CircleDashed className="h-3.5 w-3.5" />}
+          {done ? (
+            <CheckCircle2 className="h-3.5 w-3.5" />
+          ) : (
+            <CircleDashed className="h-3.5 w-3.5" />
+          )}
           {done ? "Complété" : "Incomplet"}
         </span>
       </div>
@@ -94,12 +102,17 @@ function TagField({
             className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-2.5 py-1 text-xs font-medium text-primary"
           >
             {v}
-            <button onClick={() => onChange(values.filter((x) => x !== v))} aria-label={`Retirer ${v}`}>
+            <button
+              onClick={() => onChange(values.filter((x) => x !== v))}
+              aria-label={`Retirer ${v}`}
+            >
               <X className="h-3 w-3" />
             </button>
           </motion.span>
         ))}
-        {values.length === 0 && <span className="text-xs text-muted-foreground">Aucun élément</span>}
+        {values.length === 0 && (
+          <span className="text-xs text-muted-foreground">Aucun élément</span>
+        )}
       </div>
       <div className="flex gap-2">
         <Input
@@ -143,7 +156,9 @@ function CriteriaPage() {
 
   const toggleCity = (c: string) =>
     updateCriteria({
-      cities: criteria.cities.includes(c) ? criteria.cities.filter((x) => x !== c) : [...criteria.cities, c],
+      cities: criteria.cities.includes(c)
+        ? criteria.cities.filter((x) => x !== c)
+        : [...criteria.cities, c],
     });
 
   const simulateUpload = () => {
@@ -183,8 +198,8 @@ function CriteriaPage() {
         </motion.div>
       ) : (
         <div className="mb-6 rounded-lg border border-[color-mix(in_oklab,var(--warning)_35%,white)] bg-[color-mix(in_oklab,var(--warning)_12%,white)] px-4 py-3 text-sm text-[color-mix(in_oklab,var(--warning)_70%,black)]">
-          Configuration non validée : la veille automatique reste désactivée tant que vous n'enregistrez pas
-          vos critères.
+          Configuration non validée : la veille automatique reste désactivée tant que vous
+          n'enregistrez pas vos critères.
         </div>
       )}
 
@@ -200,7 +215,10 @@ function CriteriaPage() {
                 key={c}
                 className="flex cursor-pointer items-center gap-3 rounded-lg border border-border px-3 py-2.5 transition-colors hover:border-accent/50 hover:bg-accent-soft/40"
               >
-                <Checkbox checked={criteria.categories.includes(c)} onCheckedChange={() => toggleCategory(c)} />
+                <Checkbox
+                  checked={criteria.categories.includes(c)}
+                  onCheckedChange={() => toggleCategory(c)}
+                />
                 <span className="text-sm">{c}</span>
               </label>
             ))}
@@ -297,7 +315,9 @@ function CriteriaPage() {
               <label
                 key={o.key}
                 className={`flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2.5 transition-colors ${
-                  criteria.certificate === o.key ? "border-accent bg-accent-soft/50" : "border-border"
+                  criteria.certificate === o.key
+                    ? "border-accent bg-accent-soft/50"
+                    : "border-border"
                 }`}
               >
                 <input
@@ -333,21 +353,26 @@ function CriteriaPage() {
         >
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              {["marchespublics.gov.ma", "portail-sante.gov.ma", "appels-offres-prives.ma"].map((p) => (
-                <label key={p} className="flex items-center gap-3 rounded-lg border border-border px-3 py-2.5">
-                  <Checkbox
-                    checked={criteria.portals.includes(p)}
-                    onCheckedChange={() =>
-                      updateCriteria({
-                        portals: criteria.portals.includes(p)
-                          ? criteria.portals.filter((x) => x !== p)
-                          : [...criteria.portals, p],
-                      })
-                    }
-                  />
-                  <span className="text-sm">{p}</span>
-                </label>
-              ))}
+              {["marchespublics.gov.ma", "portail-sante.gov.ma", "appels-offres-prives.ma"].map(
+                (p) => (
+                  <label
+                    key={p}
+                    className="flex items-center gap-3 rounded-lg border border-border px-3 py-2.5"
+                  >
+                    <Checkbox
+                      checked={criteria.portals.includes(p)}
+                      onCheckedChange={() =>
+                        updateCriteria({
+                          portals: criteria.portals.includes(p)
+                            ? criteria.portals.filter((x) => x !== p)
+                            : [...criteria.portals, p],
+                        })
+                      }
+                    />
+                    <span className="text-sm">{p}</span>
+                  </label>
+                ),
+              )}
             </div>
             <div className="space-y-2">
               <Label>Fréquence de la veille automatique</Label>

@@ -29,13 +29,7 @@ export const CITIES = [
 export type Conformity = "Conforme" | "À vérifier" | "Non conforme";
 
 export type TenderStatus =
-  | "Nouveau"
-  | "En analyse"
-  | "Conforme"
-  | "Non conforme"
-  | "Soumis"
-  | "Gagné"
-  | "Perdu";
+  "Nouveau" | "En analyse" | "Conforme" | "Non conforme" | "Soumis" | "Gagné" | "Perdu";
 
 export const STAGES = [
   "Identifié",
@@ -111,7 +105,12 @@ export const PRODUCTS: Product[] = [
     category: "Bloc opératoire",
     supplier: "MedTech Maghreb",
     reference: "FZ-AS900",
-    specs: ["Débit 60 L/min", "Bocal 2 x 4 L autoclavable", "Niveau sonore < 55 dB", "Marquage CE / ISO 13485"],
+    specs: [
+      "Débit 60 L/min",
+      "Bocal 2 x 4 L autoclavable",
+      "Niveau sonore < 55 dB",
+      "Marquage CE / ISO 13485",
+    ],
   },
   {
     id: "p2",
@@ -119,7 +118,12 @@ export const PRODUCTS: Product[] = [
     category: "Bloc opératoire",
     supplier: "Atlas Medical Supply",
     reference: "FZ-TOE1",
-    specs: ["Charge max 250 kg", "Commande filaire + pédale", "Plateau radio-transparent", "Trendelenburg ±30°"],
+    specs: [
+      "Charge max 250 kg",
+      "Commande filaire + pédale",
+      "Plateau radio-transparent",
+      "Trendelenburg ±30°",
+    ],
   },
   {
     id: "p3",
@@ -135,7 +139,12 @@ export const PRODUCTS: Product[] = [
     category: "Diagnostic",
     supplier: "Sanitas Distribution",
     reference: "FZ-MP12",
-    specs: ["ECG 12 dérivations", "SpO2, PNI, T°, CO2", "Écran tactile 12,1\"", "Autonomie batterie 5 h"],
+    specs: [
+      "ECG 12 dérivations",
+      "SpO2, PNI, T°, CO2",
+      'Écran tactile 12,1"',
+      "Autonomie batterie 5 h",
+    ],
   },
   {
     id: "p5",
@@ -143,7 +152,12 @@ export const PRODUCTS: Product[] = [
     category: "Mobilier médical",
     supplier: "Atlas Medical Supply",
     reference: "FZ-LM4S",
-    specs: ["Hauteur variable 40–80 cm", "Barrières rabattables ABS", "Freins centralisés", "Charge 220 kg"],
+    specs: [
+      "Hauteur variable 40–80 cm",
+      "Barrières rabattables ABS",
+      "Freins centralisés",
+      "Charge 220 kg",
+    ],
   },
   {
     id: "p6",
@@ -159,7 +173,7 @@ export const PRODUCTS: Product[] = [
     category: "Réanimation",
     supplier: "Sanitas Distribution",
     reference: "FZ-RVPRO",
-    specs: ["Modes VC, PC, VNI, AI", "Turbine autonome 4 h", "Écran 15\"", "Compensation de fuites"],
+    specs: ["Modes VC, PC, VNI, AI", "Turbine autonome 4 h", 'Écran 15"', "Compensation de fuites"],
   },
   {
     id: "p8",
@@ -167,7 +181,12 @@ export const PRODUCTS: Product[] = [
     category: "Diagnostic",
     supplier: "Sanitas Distribution",
     reference: "FZ-EV7",
-    specs: ["3 sondes (convexe, linéaire, cardiaque)", "Doppler couleur", "Écran 15,6\" full HD", "DICOM 3.0"],
+    specs: [
+      "3 sondes (convexe, linéaire, cardiaque)",
+      "Doppler couleur",
+      'Écran 15,6" full HD',
+      "DICOM 3.0",
+    ],
   },
   {
     id: "p9",
@@ -175,7 +194,12 @@ export const PRODUCTS: Product[] = [
     category: "Mobilier médical",
     supplier: "Atlas Medical Supply",
     reference: "FZ-CU6",
-    specs: ["Structure ABS anti-choc", "Serrure à code", "Support défibrillateur", "Roues Ø125 antistatiques"],
+    specs: [
+      "Structure ABS anti-choc",
+      "Serrure à code",
+      "Support défibrillateur",
+      "Roues Ø125 antistatiques",
+    ],
   },
   {
     id: "p10",
@@ -183,7 +207,12 @@ export const PRODUCTS: Product[] = [
     category: "Bloc opératoire",
     supplier: "MedTech Maghreb",
     reference: "FZ-BE400",
-    specs: ["Mono/bipolaire", "Coagulation par spray", "Détection automatique de plaque", "Écran LCD"],
+    specs: [
+      "Mono/bipolaire",
+      "Coagulation par spray",
+      "Détection automatique de plaque",
+      "Écran LCD",
+    ],
   },
   {
     id: "p11",
@@ -199,7 +228,12 @@ export const PRODUCTS: Product[] = [
     category: "Stérilisation",
     supplier: "Cleanmed Industrie",
     reference: "FZ-LD200",
-    specs: ["Capacité 10 paniers DIN", "Thermo-désinfection A0 3000", "Double porte", "EN ISO 15883"],
+    specs: [
+      "Capacité 10 paniers DIN",
+      "Thermo-désinfection A0 3000",
+      "Double porte",
+      "EN ISO 15883",
+    ],
   },
   {
     id: "p13",
@@ -215,7 +249,12 @@ export const PRODUCTS: Product[] = [
     category: "Réanimation",
     supplier: "MedTech Maghreb",
     reference: "FZ-DEFC",
-    specs: ["Énergie 1–360 J", "Mode DEA + manuel", "Stimulateur externe", "Palettes adulte/pédiatrique"],
+    specs: [
+      "Énergie 1–360 J",
+      "Mode DEA + manuel",
+      "Stimulateur externe",
+      "Palettes adulte/pédiatrique",
+    ],
   },
 ];
 
@@ -374,8 +413,22 @@ const seeds: Seed[] = [
     deadline: "2026-09-24",
     stage: 3,
     lines: [
-      ["Aspirateur chirurgical électrique", 12, "Débit ≥ 50 L/min, bocaux autoclavables", "Conforme", "p1", 96],
-      ["Table d'opération électrique", 4, "Charge ≥ 200 kg, plateau radio-transparent", "Conforme", "p2", 92],
+      [
+        "Aspirateur chirurgical électrique",
+        12,
+        "Débit ≥ 50 L/min, bocaux autoclavables",
+        "Conforme",
+        "p1",
+        96,
+      ],
+      [
+        "Table d'opération électrique",
+        4,
+        "Charge ≥ 200 kg, plateau radio-transparent",
+        "Conforme",
+        "p2",
+        92,
+      ],
       ["Éclairage chirurgical LED", 4, "≥ 140 000 lux, IRC ≥ 95", "À vérifier", "p3", 81],
     ],
   },
@@ -415,7 +468,14 @@ const seeds: Seed[] = [
     deadline: "2026-10-06",
     stage: 2,
     lines: [
-      ["Lit médicalisé électrique", 80, "4 sections, hauteur variable, barrières", "Conforme", "p5", 97],
+      [
+        "Lit médicalisé électrique",
+        80,
+        "4 sections, hauteur variable, barrières",
+        "Conforme",
+        "p5",
+        97,
+      ],
       ["Chariot d'urgence", 15, "6 tiroirs, serrure à code", "Conforme", "p9", 93],
     ],
   },
@@ -428,8 +488,22 @@ const seeds: Seed[] = [
     deadline: "2026-09-30",
     stage: 1,
     lines: [
-      ["Stérilisateur autoclave 90 L", 3, "Classe B, cycle 134 °C, EN 13060", "À vérifier", "p6", 88],
-      ["Laveur-désinfecteur d'instruments", 2, "10 paniers DIN, double porte", "Conforme", "p12", 91],
+      [
+        "Stérilisateur autoclave 90 L",
+        3,
+        "Classe B, cycle 134 °C, EN 13060",
+        "À vérifier",
+        "p6",
+        88,
+      ],
+      [
+        "Laveur-désinfecteur d'instruments",
+        2,
+        "10 paniers DIN, double porte",
+        "Conforme",
+        "p12",
+        91,
+      ],
     ],
   },
   {
@@ -442,7 +516,14 @@ const seeds: Seed[] = [
     stage: 6,
     result: "Gagné",
     lines: [
-      ["Bistouri électrique 400 W", 8, "Mono/bipolaire, détection de plaque", "Conforme", "p10", 96],
+      [
+        "Bistouri électrique 400 W",
+        8,
+        "Mono/bipolaire, détection de plaque",
+        "Conforme",
+        "p10",
+        96,
+      ],
       ["Table d'opération électrique", 6, "Trendelenburg ±25°", "Conforme", "p2", 89],
     ],
   },
@@ -456,7 +537,7 @@ const seeds: Seed[] = [
     stage: 3,
     lines: [
       ["Échographe portable", 2, "Sonde cardiaque incluse", "Conforme", "p8", 92],
-      ["Moniteur multiparamétrique", 10, "Écran ≥ 12\"", "Conforme", "p4", 94],
+      ["Moniteur multiparamétrique", 10, 'Écran ≥ 12"', "Conforme", "p4", 94],
     ],
   },
   {
@@ -469,7 +550,14 @@ const seeds: Seed[] = [
     stage: 4,
     lines: [
       ["Respirateur de réanimation", 12, "Compensation de fuites, VNI", "Conforme", "p7", 93],
-      ["Moniteur multiparamétrique", 30, "Centrale de surveillance compatible", "À vérifier", "p4", 84],
+      [
+        "Moniteur multiparamétrique",
+        30,
+        "Centrale de surveillance compatible",
+        "À vérifier",
+        "p4",
+        84,
+      ],
       ["Chariot d'urgence", 12, "Support défibrillateur", "Conforme", "p9", 90],
     ],
   },
@@ -482,7 +570,14 @@ const seeds: Seed[] = [
     deadline: "2026-09-26",
     stage: 2,
     lines: [
-      ["Kit de consommables bloc", 1200, "Champs stériles renforcés, lot traçable", "Conforme", "p13", 99],
+      [
+        "Kit de consommables bloc",
+        1200,
+        "Champs stériles renforcés, lot traçable",
+        "Conforme",
+        "p13",
+        99,
+      ],
     ],
   },
   {
@@ -546,9 +641,7 @@ const seeds: Seed[] = [
     budget: 845000,
     deadline: "2026-11-12",
     stage: 2,
-    lines: [
-      ["Lit médicalisé électrique", 55, "Freins centralisés", "Conforme", "p5", 96],
-    ],
+    lines: [["Lit médicalisé électrique", 55, "Freins centralisés", "Conforme", "p5", 96]],
   },
   {
     ref: "CHU6-2026-0078",
@@ -571,9 +664,7 @@ const seeds: Seed[] = [
     budget: 380000,
     deadline: "2026-09-15",
     stage: 5,
-    lines: [
-      ["Kit de consommables bloc", 900, "Stérilisation EO", "Conforme", "p13", 98],
-    ],
+    lines: [["Kit de consommables bloc", 900, "Stérilisation EO", "Conforme", "p13", 98]],
   },
   {
     ref: "CAM-2026-0033",
@@ -596,9 +687,7 @@ const seeds: Seed[] = [
     budget: 1290000,
     deadline: "2026-10-27",
     stage: 3,
-    lines: [
-      ["Laveur-désinfecteur d'instruments", 4, "EN ISO 15883", "Conforme", "p12", 95],
-    ],
+    lines: [["Laveur-désinfecteur d'instruments", 4, "EN ISO 15883", "Conforme", "p12", 95]],
   },
   {
     ref: "MS-2026-0377",
@@ -621,17 +710,18 @@ const seeds: Seed[] = [
     budget: 690000,
     deadline: "2026-11-20",
     stage: 1,
-    lines: [
-      ["Moniteur multiparamétrique", 8, "Capnographie incluse", "Conforme", "p4", 91],
-    ],
+    lines: [["Moniteur multiparamétrique", 8, "Capnographie incluse", "Conforme", "p4", 91]],
   },
 ];
 
-function statusForStage(stage: number, lines: Seed["lines"], result?: "Gagné" | "Perdu"): TenderStatus {
+function statusForStage(
+  stage: number,
+  lines: Seed["lines"],
+  result?: "Gagné" | "Perdu",
+): TenderStatus {
   if (stage >= 6) return result ?? "Gagné";
   if (stage === 5) return "Soumis";
-  if (stage >= 3)
-    return lines.some((l) => l[3] === "Non conforme") ? "Non conforme" : "Conforme";
+  if (stage >= 3) return lines.some((l) => l[3] === "Non conforme") ? "Non conforme" : "Conforme";
   if (stage === 2) return "En analyse";
   return "Nouveau";
 }
@@ -649,13 +739,30 @@ export const TENDERS: Tender[] = seeds.map((s, i) => {
     score: l[5],
   }));
   const history: HistoryEntry[] = [
-    { at: D(2 + (i % 6), "09:14"), label: "Dossier identifié par l'Agent Veille sur marchespublics.gov.ma" },
+    {
+      at: D(2 + (i % 6), "09:14"),
+      label: "Dossier identifié par l'Agent Veille sur marchespublics.gov.ma",
+    },
   ];
-  if (s.stage >= 2) history.push({ at: D(2 + (i % 6), "10:02"), label: "Fiche de synthèse générée par l'Agent Veille & Analyse" });
-  if (s.stage >= 3) history.push({ at: D(3 + (i % 5), "11:35"), label: `Matching technique terminé — ${requirements.length} ligne(s) analysée(s)` });
-  if (s.stage >= 4) history.push({ at: D(4 + (i % 4), "08:30"), label: "4 documents générés automatiquement" });
-  if (s.stage >= 5) history.push({ at: D(5 + (i % 3), "16:10"), label: "Dossier soumis sur le portail des marchés publics" });
-  if (s.stage >= 6) history.push({ at: D(6 + (i % 2), "12:45"), label: `Résultat enregistré : ${s.result}` });
+  if (s.stage >= 2)
+    history.push({
+      at: D(2 + (i % 6), "10:02"),
+      label: "Fiche de synthèse générée par l'Agent Veille & Analyse",
+    });
+  if (s.stage >= 3)
+    history.push({
+      at: D(3 + (i % 5), "11:35"),
+      label: `Matching technique terminé — ${requirements.length} ligne(s) analysée(s)`,
+    });
+  if (s.stage >= 4)
+    history.push({ at: D(4 + (i % 4), "08:30"), label: "4 documents générés automatiquement" });
+  if (s.stage >= 5)
+    history.push({
+      at: D(5 + (i % 3), "16:10"),
+      label: "Dossier soumis sur le portail des marchés publics",
+    });
+  if (s.stage >= 6)
+    history.push({ at: D(6 + (i % 2), "12:45"), label: `Résultat enregistré : ${s.result}` });
 
   const avg = Math.round(requirements.reduce((a, r) => a + r.score, 0) / requirements.length);
   return {
