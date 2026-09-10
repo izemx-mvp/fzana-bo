@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Boxes } from "lucide-react";
-import type { Product } from "@/lib/mock-data";
+import { margin, type Product } from "@/lib/mock-data";
 
 export function ProductModal({
   product,
@@ -37,6 +37,22 @@ export function ProductModal({
               <div>
                 <dt className="text-xs text-muted-foreground">Fournisseur</dt>
                 <dd className="font-medium">{product.supplier}</dd>
+              </div>
+              <div>
+                <dt className="text-xs text-muted-foreground">Prix d'achat (HT)</dt>
+                <dd className="font-medium tabular-nums">
+                  {product.purchasePrice.toLocaleString("fr-MA")} MAD
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs text-muted-foreground">Prix de vente (HT)</dt>
+                <dd className="font-medium tabular-nums">
+                  {product.salePrice.toLocaleString("fr-MA")} MAD
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs text-muted-foreground">Marge</dt>
+                <dd className="font-medium tabular-nums">{margin(product)} %</dd>
               </div>
             </dl>
             <div>

@@ -2,11 +2,16 @@ import { createContext, useCallback, useContext, useMemo, useState, type ReactNo
 import {
   CATEGORIES,
   DOC_TYPES,
+  PRODUCTS,
+  SUPPLIERS,
   TENDERS,
   generateDiscoveredTender,
   type Category,
   type DocType,
   type GeneratedDoc,
+  type PieceStatus,
+  type Product,
+  type Supplier,
   type Tender,
   type TenderStatus,
 } from "./mock-data";
@@ -63,6 +68,18 @@ type Ctx = {
   setResult: (id: string, result: "Gagné" | "Perdu") => void;
   runAnalysis: (id: string) => void;
   runVeille: () => Tender[];
+  setPieceStatus: (tenderId: string, pieceId: string, status: PieceStatus) => void;
+
+  products: Product[];
+  getProduct: (id: string) => Product | undefined;
+  addProduct: (p: Omit<Product, "id">) => void;
+  updateProduct: (id: string, patch: Partial<Product>) => void;
+  removeProduct: (id: string) => void;
+
+  suppliers: Supplier[];
+  addSupplier: (s: Omit<Supplier, "id">) => void;
+  updateSupplier: (id: string, patch: Partial<Supplier>) => void;
+  removeSupplier: (id: string) => void;
 
   docs: GeneratedDoc[];
   setDocStatus: (id: string, status: GeneratedDoc["status"]) => void;
@@ -108,6 +125,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [criteriaSaved, setCriteriaSaved] = useState(false);
   const [tenders, setTenders] = useState<Tender[]>(TENDERS);
   const [docStatuses, setDocStatuses] = useState<Record<string, GeneratedDoc["status"]>>({});
+  const [products, setProducts] = useState<Product[]>(PRODUCTS);
+  const [suppliers, setSuppliers] = useState<Supplier[]>(SUPPLIERS);
   const [notifications, setNotifications] = useState([
     { id: "n1", label: "Agent Veille a identifié 3 nouveaux appels d'offres", at: "il y a 12 min" },
     { id: "n2", label: "Certificat FZANA : renouvellement à suivre", at: "il y a 2 h" },
@@ -219,6 +238,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return found;
   }, [criteria, tenders]);
 
+  const setPieceStatus = useCallback(
+    (tenderId: string, pieceId: string, status: PieceStatus) => {
+      setTenders((list) =>
+        list.map((t) =>
+          t.id === tenderId
+            ? { ...t, pieces: t.pieces.map((p) => (p.id === pieceId ? { ...p, status } : p)) }
+            : t,
+        ),
+      );
+    },
+    [],
+  );
+
   const visibleTenders = useMemo(() => {
     if (!criteriaSaved) return tenders;
     return tenders.filter(
@@ -262,6 +294,44 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setResult,
     runAnalysis,
     runVeille,
+    setPieceStatus,
+    products,
+    getProduct: (id) => products.find((p) => p.id === id),
+    addProduct: (p) =>
+      setProducts((list) => [
+        {
+          ...p,
+          id: `p-${Math.random().toString(36).slice(2, 8)}`,
+          supplier: suppliers.find((s) => s.id === p.supplierId)?.name ?? p.supplier,
+        },
+        ...list,
+      ]),
+    updateProduct: (id, patch) =>
+      setProducts((list) =>
+        list.map((p) =>
+          p.id === id
+            ? {
+                ...p,
+                ...patch,
+                supplier:
+                  suppliers.find((s) => s.id === (patch.supplierId ?? p.supplierId))?.name ??
+                  p.supplier,
+              }
+            : p,
+        ),
+      ),
+    removeProduct: (id) => setProducts((list) => list.filter((p) => p.id !== id)),
+    suppliers,
+    addSupplier: (s) =>
+      setSuppliers((list) => [{ ...s, id: `s-${Math.random().toString(36).slice(2, 8)}` }, ...list]),
+    updateSupplier: (id, patch) => {
+      setSuppliers((list) => list.map((s) => (s.id === id ? { ...s, ...patch } : s)));
+      if (patch.name)
+        setProducts((list) =>
+          list.map((p) => (p.supplierId === id ? { ...p, supplier: patch.name! } : p)),
+        );
+    },
+    removeSupplier: (id) => setSuppliers((list) => list.filter((s) => s.id !== id)),
     docs,
     setDocStatus: (id, status) => setDocStatuses((s) => ({ ...s, [id]: status })),
     agents,
