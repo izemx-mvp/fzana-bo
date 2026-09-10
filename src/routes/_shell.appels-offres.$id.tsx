@@ -275,8 +275,10 @@ function TenderDetail() {
               {t.client}
             </h1>
             <p className="mt-1 text-sm text-muted-foreground">
-              Appel d'offres {t.ref} · étape {t.stage}/6 — {STAGES[t.stage - 1]}
+              Appel d'offres n° {t.ref} · {t.procedure} · étape {t.stage}/6 —{" "}
+              {STAGES[t.stage - 1]}
             </p>
+            <p className="mt-2 max-w-3xl text-sm">{t.objet}</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <StatusBadge status={t.status} />
