@@ -299,6 +299,9 @@ function TenderDetail() {
           <Stat icon={Wallet} label="Budget estimé">
             <span className="tabular-nums">{formatMAD(t.budget)}</span>
           </Stat>
+          <Stat icon={Wallet} label="Caution provisoire">
+            <span className="tabular-nums">{formatMAD(t.caution)}</span>
+          </Stat>
           <Stat icon={CalendarClock} label="Date limite">
             {new Date(t.deadline).toLocaleDateString("fr-FR")}
           </Stat>
