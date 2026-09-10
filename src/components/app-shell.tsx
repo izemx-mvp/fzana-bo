@@ -3,6 +3,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import {
   Bell,
+  Boxes,
+  Building2,
   FileText,
   LayoutDashboard,
   LogOut,
@@ -33,6 +35,8 @@ const NAV = [
   { to: "/criteres", label: "Critères", icon: SlidersHorizontal },
   { to: "/dashboard", label: "Tableau de bord", icon: LayoutDashboard },
   { to: "/appels-offres", label: "Appels d'offres", icon: FileText },
+  { to: "/catalogue", label: "Catalogue", icon: Boxes },
+  { to: "/fournisseurs", label: "Fournisseurs", icon: Building2 },
 ] as const;
 
 export function AppShell({ children }: { children: React.ReactNode }) {

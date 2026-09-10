@@ -40,6 +40,7 @@ import {
   conformityRate,
   productById,
   type DocType,
+  type PieceStatus,
   type Product,
   type Tender,
 } from "@/lib/mock-data";
@@ -66,7 +67,8 @@ export const Route = createFileRoute("/_shell/appels-offres/$id")({
 
 const TABS = [
   "Fiche de synthèse",
-  "Exigences techniques",
+  "Pièces du dossier",
+  "Lots & articles",
   "Matching produits",
   "Documents",
   "Historique",
@@ -75,11 +77,21 @@ type Tab = (typeof TABS)[number];
 
 const tabMinStage: Record<Tab, number> = {
   "Fiche de synthèse": 1,
-  "Exigences techniques": 1,
+  "Pièces du dossier": 1,
+  "Lots & articles": 1,
   "Matching produits": 3,
   Documents: 4,
   Historique: 1,
 };
+
+const PIECE_TONE: Record<PieceStatus, string> = {
+  Fournie: "bg-accent-soft text-accent",
+  "À produire":
+    "bg-[color-mix(in_oklab,var(--warning)_14%,white)] text-[var(--warning)] border border-[color-mix(in_oklab,var(--warning)_30%,white)]",
+  Manquante: "bg-destructive/10 text-destructive",
+};
+
+const PIECE_CYCLE: PieceStatus[] = ["Manquante", "À produire", "Fournie"];
 
 export function docContent(t: Tender, type: DocType) {
   const head = [
@@ -183,7 +195,7 @@ function Stat({
 
 function TenderDetail() {
   const { id } = useParams({ from: "/_shell/appels-offres/$id" });
-  const { getTender, advanceStage, setResult, docs, pushNotification } = useApp();
+  const { getTender, advanceStage, setResult, docs, pushNotification, setPieceStatus } = useApp();
   const t = getTender(id);
   const [tab, setTab] = useState<Tab>("Fiche de synthèse");
   const [product, setProduct] = useState<Product | null>(null);
@@ -514,7 +526,68 @@ function TenderDetail() {
             </div>
           )}
 
-          {tab === "Exigences techniques" && (
+          {tab === "Pièces du dossier" && (
+            <div className="space-y-6">
+              {(["Dossier administratif", "Dossier technique", "Dossier additif"] as const).map(
+                (cat) => {
+                  const list = t.pieces.filter((p) => p.category === cat);
+                  if (list.length === 0) return null;
+                  const done = list.filter((p) => p.status === "Fournie").length;
+                  return (
+                    <div key={cat} className="glass-card overflow-hidden">
+                      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 bg-secondary/40 px-5 py-4">
+                        <h2 className="font-display text-base font-semibold">{cat}</h2>
+                        <span className="text-sm text-muted-foreground tabular-nums">
+                          {done}/{list.length} pièce(s) fournie(s)
+                        </span>
+                      </div>
+                      <ul className="divide-y divide-border/60">
+                        {list.map((p) => (
+                          <li
+                            key={p.id}
+                            className="flex flex-wrap items-center gap-3 px-5 py-4 transition-colors hover:bg-secondary/30"
+                          >
+                            <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
+                            <div className="min-w-52 flex-1">
+                              <p className="font-medium">
+                                {p.name}
+                                {p.mandatory && <span className="ml-1 text-destructive">*</span>}
+                              </p>
+                              <p className="text-sm text-muted-foreground">{p.note}</p>
+                            </div>
+                            <span
+                              className={`rounded-full px-2.5 py-1 text-xs font-medium ${PIECE_TONE[p.status]}`}
+                            >
+                              {p.status}
+                            </span>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                const next =
+                                  PIECE_CYCLE[
+                                    (PIECE_CYCLE.indexOf(p.status) + 1) % PIECE_CYCLE.length
+                                  ]!;
+                                setPieceStatus(t.id, p.id, next);
+                                toast.success(`${p.name} → ${next}`);
+                              }}
+                            >
+                              Changer l'état
+                            </Button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                },
+              )}
+              <p className="text-xs text-muted-foreground">
+                * Pièce obligatoire au sens du décret n° 2-22-431 relatif aux marchés publics.
+              </p>
+            </div>
+          )}
+
+          {tab === "Lots & articles" && (
             <div className="space-y-2">
               {t.requirements.map((r) => {
                 const p = productById(r.productId);
